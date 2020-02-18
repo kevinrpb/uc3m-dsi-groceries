@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "uc3m-dsi-groceries": {
+      "hosting": {
+        "uc3m-dsi-groceries": [
+          "uc3m-dsi-groceries"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "uc3m-dsi-groceries",
+      "public": "dist/uc3m-dsi-groceries",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
