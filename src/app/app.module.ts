@@ -14,10 +14,10 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment';
 
-import { MaterialModule } from './material/material.module';
-import { ProfileComponent } from './profile/profile.component';
-import { HomeComponent } from './home/home.component';
-import { AuthGuard } from './auth.guard';
+import { MaterialModule } from './shared/material/material.module';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { HomeComponent } from './pages/home/home.component';
+import { AuthGuard } from './core/auth/auth.guard';
 
 @NgModule({
   declarations: [
