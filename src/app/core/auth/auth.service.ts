@@ -36,13 +36,20 @@ export class AuthService {
     );
 
     this.user$.subscribe((user: User) => {
-      if (user && !user.firstLoginCompleted) {
+      if (
+        user !== null &&
+        user.firstLoginCompleted === false
+      ) {
         this.router.navigate(["/profile"])
       }
-    })
+    });
   }
 
   getUser(): Promise<User> {
+    return this.user$.toPromise()
+  }
+
+  getAFUser(): Promise<User> {
     return this.afAuth.authState.pipe(first()).toPromise();
   }
 
@@ -53,7 +60,12 @@ export class AuthService {
     return this.updateUserData(credential.user);
   }
 
-  private updateUserData({ uid, email, displayName, photoURL }) {
+  private updateUserData({
+    uid,
+    email,
+    displayName,
+    photoURL
+  }) {
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${uid}`
     );
@@ -63,14 +75,13 @@ export class AuthService {
       email,
       displayName,
       photoURL,
-      firstLoginCompleted: false
     };
 
     return userRef.set(data, { merge: true });
   }
 
   async updateUserHealthData({ height, weight, gender }: UserHealthData) {
-    const { uid, email } = await this.getUser();
+    const { uid, email } = await this.getAFUser();
 
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${uid}`
@@ -86,7 +97,7 @@ export class AuthService {
   }
 
   async completeFirstLogin() {
-    const { uid, email } = await this.getUser();
+    const { uid, email } = await this.getAFUser();
 
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
       `users/${uid}`
