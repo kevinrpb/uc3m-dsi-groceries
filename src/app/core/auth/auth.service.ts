@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { User } from "../../shared/models/user.model";
+import { User, UserHealthData } from "../../shared/models/user.model";
 
 import { auth } from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -34,6 +34,12 @@ export class AuthService {
         }
       })
     );
+
+    this.user$.subscribe((user: User) => {
+      if (user && !user.firstLoginCompleted) {
+        this.router.navigate(["/profile"])
+      }
+    })
   }
 
   getUser(): Promise<User> {
@@ -56,10 +62,43 @@ export class AuthService {
       uid,
       email,
       displayName,
-      photoURL
+      photoURL,
+      firstLoginCompleted: false
     };
 
     return userRef.set(data, { merge: true });
+  }
+
+  async updateUserHealthData({ height, weight, gender }: UserHealthData) {
+    const { uid, email } = await this.getUser();
+
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+      `users/${uid}`
+    );
+
+    const data = {
+      uid,
+      email,
+      healthData: { height, weight, gender }
+    };
+
+    await userRef.set(data, { merge: true });
+  }
+
+  async completeFirstLogin() {
+    const { uid, email } = await this.getUser();
+
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
+      `users/${uid}`
+    );
+
+    const data = {
+      uid,
+      email,
+      firstLoginCompleted: true
+    };
+
+    await userRef.set(data, { merge: true });
   }
 
   async signOut() {

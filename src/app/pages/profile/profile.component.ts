@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../core/auth/auth.service";
 
 @Component({
@@ -6,6 +6,15 @@ import { AuthService } from "../../core/auth/auth.service";
   templateUrl: './profile.component.html',
   styleUrls: []
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
+
   constructor(public auth: AuthService) {}
+
+  ngOnInit(): void {
+    this.auth.completeFirstLogin()
+      .catch(error => {
+        throw new Error(`Couldn't complete first login. Got: ${error}`);
+      })
+  }
+
 }
