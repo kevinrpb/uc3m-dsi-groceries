@@ -1,9 +1,26 @@
 # Uc3mDsiGroceries
 
 ## TODO
+### Styles
+- [ ] Hacer iconos cuadrados
+- [ ] Poner fondo de body del mismo color que la app
+
 ### Auth
-- Función login con email y contraseña
-- Función signup
+- ...
+
+### Servicio Productos
+- [ ] Crear modelo de producto
+- [ ] Sincronización de productos con firestore
+
+### Servicio Listas
+- [ ] Inyectar servicio
+- [X] Sincronización con listas en firestore (falta probarlo)
+- [ ] Permitir crear nueva lista
+- [ ] Permitir editar lista
+  - [ ] Item por item
+  - [ ] Vaciar completamente
+- [ ] Permitir eliminar lista
+- [ ] Permitir compartir lista
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
 
