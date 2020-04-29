@@ -1,5 +1,10 @@
 # Uc3mDsiGroceries
 
+# TODO
+## Auth
+· Función login con email y contraseña
+· Función signup
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
 
 ## Development server

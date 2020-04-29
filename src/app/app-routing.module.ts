@@ -15,6 +15,11 @@ const routes: Routes = [
     canActivate: [NotLoggedGuard]
   },
   {
+    path: 'signup',
+    component: HomeComponent,
+    canActivate: [NotLoggedGuard]
+  },
+  {
     path: 'home',
     component: HomeComponent,
     canActivate: [LoggedGuard]
