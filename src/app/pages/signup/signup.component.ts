@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +14,8 @@ export class SignupComponent {
   public visible_: boolean
 
   constructor(
-
+    private auth: AuthService,
+    private router: Router
   ) { }
 
   public signupForm = new FormGroup({
@@ -36,7 +39,14 @@ export class SignupComponent {
   public get height()        { return this.signupForm.get('height')        }
 
   public signup(form: any) {
-
+    this.auth.emailPasswordSignUp(form)
+      .then(_ => {
+        this.router.navigate(["/home"])
+      })
+      .catch((error: Error) => {
+        // TODO: Handle the error
+        throw error;
+      })
   }
 
 }

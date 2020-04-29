@@ -34,15 +34,6 @@ export class AuthService {
         }
       })
     );
-
-    this.user$.subscribe((user: User) => {
-      if (
-        user !== null &&
-        user.firstLoginCompleted === false
-      ) {
-        this.router.navigate(["/profile"])
-      }
-    });
   }
 
   getUser(): Promise<User> {
@@ -57,10 +48,29 @@ export class AuthService {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.afAuth.auth.signInWithPopup(provider);
 
-    return this.updateUserData(credential.user);
+    await this.updateUserData(credential.user);
   }
 
-  private updateUserData({
+  async emailPasswordSignUp({
+    email,
+    password,
+    name,
+    height,
+    weight,
+    birthdate,
+    gender,
+  }) {
+    const { credential, user: { uid } } = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+
+    await this.updateUserData({ uid, email, displayName: name, photoURL: null });
+    await this.updateUserHealthData({ height, weight, gender, birthdate })
+  }
+
+  async emailPasswordSignIn({ email, password }) {
+    await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+  }
+
+  private async updateUserData({
     uid,
     email,
     displayName,
@@ -77,26 +87,10 @@ export class AuthService {
       photoURL,
     };
 
-    return userRef.set(data, { merge: true });
-  }
-
-  async updateUserHealthData({ height, weight, gender }: UserHealthData) {
-    const { uid, email } = await this.getAFUser();
-
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-      `users/${uid}`
-    );
-
-    const data = {
-      uid,
-      email,
-      healthData: { height, weight, gender }
-    };
-
     await userRef.set(data, { merge: true });
   }
 
-  async completeFirstLogin() {
+  async updateUserHealthData({ height, weight, gender, birthdate }: UserHealthData) {
     const { uid, email } = await this.getAFUser();
 
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(
@@ -105,8 +99,8 @@ export class AuthService {
 
     const data = {
       uid,
-      email,
-      firstLoginCompleted: true
+      email, // TODO: cambiar gender por lo que sea cuando esté
+      healthData: { height, weight, gender: null, birthdate }
     };
 
     await userRef.set(data, { merge: true });

@@ -7,7 +7,8 @@ export enum UserGender {
 export interface UserHealthData {
   height?: number;
   weight?: number;
-  gender?: UserGender
+  gender?: UserGender;
+  birthdate?: Date;
 }
 
 export interface User {
@@ -15,6 +16,5 @@ export interface User {
   email: string;
   photoURL?: string;
   displayName?: string;
-  firstLoginCompleted?: boolean;
   healthData?: UserHealthData;
 }

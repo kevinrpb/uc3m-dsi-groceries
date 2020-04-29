@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-   
+
   public visible: boolean
 
   constructor(
@@ -28,7 +28,14 @@ export class LoginComponent {
   public get password() { return this.loginForm.get('password')  }
 
   public login (form: any) {
-    
+    this.auth.emailPasswordSignIn(form)
+      .then(_ => {
+        this.router.navigate(["/home"])
+      })
+      .catch((error: Error) => {
+        // TODO: Handle the error
+        throw error;
+      })
   }
 
   public googleLogin () {
