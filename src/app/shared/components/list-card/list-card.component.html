@@ -1,1 +1,11 @@
-<p>list-card works!</p>
+<mat-list-item>
+    <button mat-raised-button class="list_card" (click)="goList()">
+        <div class="list_card_inner">
+            <div class="mat-h3">{{list.name}}</div>
+            <div class="icons">
+            <mat-icon [ngStyle]="{'color' : (list.shared ? 'red' : 'blue')}">folder_shared</mat-icon>
+                <mat-icon (click)="exportList($event)">get_app</mat-icon>
+            </div>
+        </div>
+    </button>
+</mat-list-item>

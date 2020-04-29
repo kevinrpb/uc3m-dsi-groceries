@@ -1,15 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { List } from '../../models/list.model';
 
 @Component({
-  selector: 'app-list-card',
+  selector: 'list-card',
   templateUrl: './list-card.component.html',
   styleUrls: ['./list-card.component.scss']
 })
-export class ListCardComponent implements OnInit {
+export class ListCardComponent {
 
-  constructor() { }
+  @Input() public list: List
 
-  ngOnInit() {
+  constructor(
+
+  ) { }
+
+  public goList() {
+    console.log('Go: ' + this.list.name)
+  }
+
+  public exportList(event) {
+    event.stopPropagation()
+    console.log('Export: ' + this.list.name)
   }
 
 }

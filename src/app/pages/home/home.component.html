@@ -12,15 +12,7 @@
   </div>
 
   <mat-list class="lists_box">
-    <mat-list-item *ngFor="let l of lists" style="margin-bottom: 24px;">
-      <mat-card class="list_card">
-        {{l.name}}
-        <div style="float: right;">
-          <mat-icon>home</mat-icon>
-          <mat-icon>person</mat-icon>
-        </div>
-      </mat-card>
-    </mat-list-item>
+    <list-card *ngFor="let l of lists" [list]="l"></list-card>
   </mat-list>
 
 </div>
