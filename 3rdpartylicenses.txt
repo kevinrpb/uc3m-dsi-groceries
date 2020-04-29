@@ -166,8 +166,6 @@ MIT
 
 @angular/material/button
 
-@angular/material/card
-
 @angular/material/core
 
 @angular/material/datepicker
