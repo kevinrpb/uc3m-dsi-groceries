@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { AuthService } from '../../core/auth/auth.service';
 import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: "app-home",
@@ -11,22 +12,30 @@ import { Observable } from 'rxjs';
 export class HomeComponent {
 
   constructor(
-    public auth: AuthService
+    public auth: AuthService,
+    private snackBar: MatSnackBar
   ) {}
 
   public dotsMenuItems: Array<{}> = [
     {
-      title: 'Item1',
-      subtitle: 'Subtitle1',
+      title: 'Perfil',
+      subtitle: 'Revisa tu perfil y modifícalo',
       function: () => {
-        console.log('Item1')
+        this.snackBar.open("Esta vista no ha sido implementada", "", {duration : 1500})
       }
     },
     {
-      title: 'Item2',
-      subtitle: 'Subtitle2',
+      title: 'F.A.Q',
+      subtitle: '¿Necesitas ayuda?',
       function: () => {
-        console.log('Item2')
+        this.snackBar.open("Esta vista no ha sido implementada", "", {duration : 1500})
+      }
+    },
+    {
+      title: 'Cerrar sesión',
+      subtitle: '¡Hasta la próxima!',
+      function: () => {
+        this.auth.signOut()
       }
     }
   ]
