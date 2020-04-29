@@ -10,26 +10,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+   
+  public visible: boolean
 
   constructor(
-    private auth: AuthService,
-    private app: AppComponent,
-    private router: Router
+    public auth: AuthService,
+    public app: AppComponent,
+    public router: Router
   ) {}
 
-  private loginForm = new FormGroup({
+  public loginForm = new FormGroup({
     email:    new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   })
 
-  private get email()    { return this.loginForm.get('email')     }
-  private get password() { return this.loginForm.get('password')  }
+  public get email()    { return this.loginForm.get('email')     }
+  public get password() { return this.loginForm.get('password')  }
 
-  private login (form: any) {
+  public login (form: any) {
     
   }
 
-  private googleLogin () {
+  public googleLogin () {
     this.auth.googleSignin()
       .then(_ => {
         this.router.navigate(['/home'])
@@ -39,7 +41,7 @@ export class LoginComponent {
       })
   }
 
-  private goSignup () {
+  public goSignup () {
     this.router.navigate(['/signup'])
   }
 

@@ -25,20 +25,28 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
+
 import { BackArrowComponent } from './shared/components/back-arrow/back-arrow.component';
+import { DotsMenuComponent } from './shared/components/dots-menu/dots-menu.component';
+import { BottomMenuComponent } from './shared/components/bottom-menu/bottom-menu.component';
 
 import { registerLocaleData } from '@angular/common';
 import locale_ES from '@angular/common/locales/es';
 registerLocaleData(locale_ES, 'es');
 
 @NgModule({
+  entryComponents: [
+    BottomMenuComponent
+  ],
   declarations: [
     AppComponent,
     ProfileComponent,
     HomeComponent,
     LoginComponent,
     SignupComponent,
-    BackArrowComponent
+    BackArrowComponent,
+    DotsMenuComponent,
+    BottomMenuComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,8 @@
-<button mat-menu-item (click)="auth.signOut()">
-    <mat-icon>exit_to_app</mat-icon>
-    <span>Sign Out</span>
-  </button>
+<div class="body">
+
+  <div class="header">
+    <dots-menu [items]="dotsMenuItems"></dots-menu>
+    <button (click)="auth.signOut()">Cerrar sesión</button>
+  </div>
+
+</div>

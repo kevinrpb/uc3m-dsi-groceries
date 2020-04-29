@@ -8,7 +8,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         MatInputModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        ScrollingModule
+        MatBottomSheetModule,
+        MatListModule
     ],
     exports: [
         MatToolbarModule,
@@ -33,7 +35,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         MatInputModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        ScrollingModule
+        MatBottomSheetModule,
+        MatListModule
     ]
 })
 export class MaterialModule { }
