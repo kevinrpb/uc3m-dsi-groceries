@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
 import { AuthService } from '../../core/auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
-  styleUrls: []
+  styleUrls: ["./home.component.scss"]
 })
 
 export class HomeComponent {
@@ -27,6 +28,17 @@ export class HomeComponent {
       function: () => {
         console.log('Item2')
       }
+    }
+  ]
+
+  public lists: any = [
+    {
+      name: 'list1',
+      shared: false
+    },
+    { 
+      name: 'list2',
+      shared: true
     }
   ]
 

@@ -1,0 +1,35 @@
+@import 'src/styles.scss';
+
+.body {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    position: absolute;
+    top: 18px;
+    left: 24px;
+    width: 32px;
+}
+
+.user_info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 24px;
+
+    img {
+        width: 140px;    
+        border-radius: 50%;
+        margin-bottom: 16px;
+    }
+
+    .mat-title {
+        margin-bottom: 0;
+    }
+}
+
+.lists_box {
+    flex: 1;
+}

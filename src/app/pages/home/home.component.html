@@ -2,7 +2,19 @@
 
   <div class="header">
     <dots-menu [items]="dotsMenuItems"></dots-menu>
-    <button (click)="auth.signOut()">Cerrar sesión</button>
+    <img (click)="auth.signOut()" class="logo" src="assets/images/reduced_logo.svg">
   </div>
+
+  <div class="user_info" *ngIf="auth.user$ | async as user">
+    <img [src]="user.photoURL">
+    <div class="mat-title">{{user.displayName.split(' ').slice(0, 2).join(' ')}}</div>
+    <div>Estas son tus listas 👇</div>
+  </div>
+
+  <mat-list class="lists_box">
+    <mat-list-item *ngFor="let l of lists">
+      <mat-card>{{l.name}}</mat-card>
+    </mat-list-item>
+  </mat-list>
 
 </div>
