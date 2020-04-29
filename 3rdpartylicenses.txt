@@ -180,6 +180,8 @@ MIT
 
 @angular/material/list
 
+@angular/material/snack-bar
+
 @angular/service-worker
 MIT
 
