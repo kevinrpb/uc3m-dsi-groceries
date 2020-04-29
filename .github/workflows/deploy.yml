@@ -22,4 +22,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         npm install
-        npm run ng -- deploy --base-href=/ --cname="dsi.kevinrpb.me" --no-silent
+        npm run ng -- deploy --base-href=/ --cname="dsi.kevinrpb.me" --name="Kevin Romero Peces-Barba" --email="kevinrpb@hotmail.com" --no-silent
