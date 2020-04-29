@@ -6,7 +6,7 @@
 - [X] Poner fondo de body del mismo color que la app
 
 ### Auth
-- ...
+- [ ] Tener en cuenta campo genero en el registro
 
 ### Servicio Productos
 - [ ] Crear modelo de producto

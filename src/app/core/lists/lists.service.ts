@@ -8,24 +8,24 @@ import {
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
 
-import { Observable, of } from "rxjs";
-import { switchMap, first, filter } from "rxjs/operators";
+import { Observable, merge } from "rxjs";
+import { switchMap } from "rxjs/operators";
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: "root"
 })
 export class ListService {
-  uid$: Observable<string>;
+  private _ownedLists$: Observable<List[]>;
+  private _sharedLists$: Observable<List[]>;
 
-  _ownedLists$: Observable<List[]>;
-  _sharedLists$: Observable<List[]>;
+  uid$: Observable<string>;
+  lists$: Observable<List[]>;
 
   constructor(
     private auth: AuthService,
     private afs: AngularFirestore,
   ) {
-    // Get the user id on
     auth.user$.pipe(switchMap(user => user ? user.uid : null));
 
     this._ownedLists$ = this.uid$.pipe(
@@ -43,5 +43,7 @@ export class ListService {
         ).valueChanges()
       )
     );
+
+    this.lists$ = merge(this._ownedLists$, this._sharedLists$);
   }
 }
