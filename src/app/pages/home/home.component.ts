@@ -33,11 +33,15 @@ export class HomeComponent {
 
   public lists: any = [
     {
-      name: 'list1',
-      shared: false
+      name: 'Mensual',
+      shared: true
     },
     { 
-      name: 'list2',
+      name: 'Semanal',
+      shared: false
+    },
+    {
+      name: 'Fiesta',
       shared: true
     }
   ]

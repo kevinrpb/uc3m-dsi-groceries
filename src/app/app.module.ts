@@ -32,6 +32,7 @@ import { BottomMenuComponent } from './shared/components/bottom-menu/bottom-menu
 
 import { registerLocaleData } from '@angular/common';
 import locale_ES from '@angular/common/locales/es';
+import { ListCardComponent } from './shared/components/list-card/list-card.component';
 registerLocaleData(locale_ES, 'es');
 
 @NgModule({
@@ -46,7 +47,8 @@ registerLocaleData(locale_ES, 'es');
     SignupComponent,
     BackArrowComponent,
     DotsMenuComponent,
-    BottomMenuComponent
+    BottomMenuComponent,
+    ListCardComponent
   ],
   imports: [
     BrowserModule,
