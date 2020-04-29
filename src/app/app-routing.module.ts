@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { LoggedGuard } from './core/auth/logged.guard';
+import { NotLoggedGuard } from './core/auth/not-logged.guard';
+
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginComponent } from './pages/login/login.component';
-
-import { LoggedGuard } from './core/auth/logged.guard';
-import { NotLoggedGuard } from './core/auth/not-logged.guard';
+import { SignupComponent } from './pages/signup/signup.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'signup',
-    component: HomeComponent,
+    component: SignupComponent,
     canActivate: [NotLoggedGuard]
   },
   {

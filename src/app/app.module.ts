@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +25,11 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { BackArrowComponent } from './shared/components/back-arrow/back-arrow.component';
+
+import { registerLocaleData } from '@angular/common';
+import locale_ES from '@angular/common/locales/es';
+registerLocaleData(locale_ES, 'es');
 
 @NgModule({
   declarations: [
@@ -32,7 +37,8 @@ import { SignupComponent } from './pages/signup/signup.component';
     ProfileComponent,
     HomeComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    BackArrowComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +55,8 @@ import { SignupComponent } from './pages/signup/signup.component';
   providers: [
     LoggedGuard,
     NotLoggedGuard,
-    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher} ,
+    { provide: LOCALE_ID, useValue: 'es' }
   ],
   bootstrap: [
     AppComponent

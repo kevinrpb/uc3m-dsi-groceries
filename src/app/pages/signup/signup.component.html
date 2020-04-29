@@ -1,3 +1,100 @@
 <div class="body">
 
+    <div class="header">
+        <back-arrow></back-arrow>
+        <img class="logo" src="assets/images/logo.svg">
+    </div>
+
+    <div class="signup_box">
+        <form [formGroup]="signupForm" class="form">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="ejemplo@correo.com" formControlName="email">
+                <button mat-icon-button matSuffix disabled style="color: #000000">
+                    <mat-icon>email</mat-icon>
+                </button>
+                <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">El correo no es válido</mat-error>
+                <mat-error *ngIf="email.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input matInput [type]="!visible ? 'password' : 'text'" formControlName="password">
+                <button mat-icon-button matSuffix (click)="visible = !visible">
+                    <mat-icon class="button_color">{{visible ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="password.hasError('minlength') && !password.hasError('required')">Mínimo 6 caracteres</mat-error>
+                <mat-error *ngIf="password.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Repite la contraseña</mat-label>
+                <input matInput [type]="!visible_ ? 'password' : 'text'" formControlName="confirm_pass">
+                <button mat-icon-button matSuffix (click)="visible_ = !visible_">
+                    <mat-icon class="button_color">{{visible_ ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="confirm_pass.hasError('minlength') && !confirm_pass.hasError('required')">Mínimo 6 caracteres</mat-error>
+                <mat-error *ngIf="confirm_pass.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+
+            <mat-divider style="margin-bottom: calc(8px + 1.34375em);"></mat-divider>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Juan" formControlName="name">
+                <button mat-icon-button matSuffix disabled style="color: #000000">
+                    <mat-icon>face</mat-icon>
+                </button>
+                <mat-error *ngIf="name.hasError('pattern') && !name.hasError('required')">Utilice solo letras</mat-error>
+                <mat-error *ngIf="name.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Apellidos</mat-label>
+                <input matInput placeholder="García" formControlName="last_name">
+                <button mat-icon-button matSuffix disabled style="color: #000000">
+                    <mat-icon>credit_card</mat-icon>
+                </button>
+                <mat-error *ngIf="last_name.hasError('pattern') && !last_name.hasError('required')">Utilice solo letras</mat-error>
+                <mat-error *ngIf="last_name.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input matInput placeholder="01/01/1970" formControlName="birthdate" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker" class="button_color"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="birthdate.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+
+            <div class="two_fields">
+                <mat-form-field appearance="fill">
+                    <mat-label>Peso</mat-label>
+                    <input matInput placeholder="68" formControlName="weight">
+                    <button mat-icon-button matSuffix disabled style="color: #000000">
+                        <mat-icon>fitness_center</mat-icon>
+                    </button>
+                    <mat-error *ngIf="weight.hasError('pattern') && !weight.hasError('required')">Utilice solo números</mat-error>
+                    <mat-error *ngIf="weight.hasError('required')">Este campo es obligatorio</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Altura</mat-label>
+                    <input matInput placeholder="1.74" formControlName="height">
+                    <button mat-icon-button matSuffix disabled style="color: #000000">
+                        <mat-icon>height</mat-icon>
+                    </button>
+                    <mat-error *ngIf="height.hasError('pattern') && !height.hasError('required')">Escriba dos decimales</mat-error>
+                    <mat-error *ngIf="height.hasError('required')">Este campo es obligatorio</mat-error>
+                </mat-form-field>
+            </div>
+
+            <button mat-raised-button color="warn" class="full_button" [disabled]="!signupForm.valid" (click)="login(loginForm.value)">
+                Regístrate
+            </button>
+
+        </form>
+    </div>
+
 </div>

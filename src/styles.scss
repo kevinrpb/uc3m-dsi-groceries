@@ -7,20 +7,38 @@ html, body {
 $bright: #FFFEF3;
 $dark: #000000;
 
-$color-primary-0: #E51B25;	
-$color-primary-1: #FB7279;
-$color-primary-2: #F14851;
-$color-primary-3: #B60A13;
-$color-primary-4: #8F0007;
+$color-primary-0: #E11930;	
+$color-primary-1: #F66F7F;
+$color-primary-2: #EC4659;
+$color-primary-3: #B3091D;
+$color-primary-4: #8D0010;
 
-$color-complement-0: #26BF17;
-$color-complement-1: #6ED963;
-$color-complement-2: #49C93C;
-$color-complement-3: #169808;
-$color-complement-4: #0B7700;
+$color-complement-0: #3BC516;	
+$color-complement-1: #7EDE64;
+$color-complement-2: #5CCF3D;
+$color-complement-3: #279D08;
+$color-complement-4: #1A7C00;
+
 
 .body {
     width: 100%;
     height: 100%;
     background-color: $bright;
+}
+
+.header {
+    height: calc(10% - 24px);
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    padding-top: 24px;
+}
+
+.button_color {
+    color: $color-primary-3;
+}
+
+.full_button {
+    width: 100%;
+    height: 45px;
 }

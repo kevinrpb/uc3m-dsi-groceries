@@ -6,6 +6,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
     imports: [
@@ -15,7 +18,10 @@ import { MatInputModule } from '@angular/material/input';
         MatDividerModule,
         MatIconModule, 
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        ScrollingModule
     ],
     exports: [
         MatToolbarModule,
@@ -24,7 +30,10 @@ import { MatInputModule } from '@angular/material/input';
         MatDividerModule,
         MatIconModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        ScrollingModule
     ]
 })
 export class MaterialModule { }

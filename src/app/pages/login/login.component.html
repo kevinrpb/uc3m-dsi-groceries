@@ -16,7 +16,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Email</mat-label>
                 <input matInput placeholder="ejemplo@correo.com" formControlName="email">
-                <button mat-icon-button matSuffix>
+                <button mat-icon-button matSuffix disabled style="color: #000000">
                     <mat-icon>email</mat-icon>
                 </button>
                 <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">El correo no es válido</mat-error>
@@ -27,13 +27,13 @@
                 <mat-label>Contraseña</mat-label>
                 <input matInput [type]="!visible ? 'password' : 'text'" formControlName="password">
                 <button mat-icon-button matSuffix (click)="visible = !visible">
-                    <mat-icon>{{visible ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-icon class="button_color">{{visible ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
                 <mat-error *ngIf="password.hasError('minlength') && !password.hasError('required')">Mínimo 6 caracteres</mat-error>
                 <mat-error *ngIf="password.hasError('required')">Este campo es obligatorio</mat-error>
             </mat-form-field>
 
-            <button mat-raised-button color="warn" class="login_button" [disabled]="!loginForm.valid" (click)="login(loginForm.value)">
+            <button mat-raised-button color="warn" class="full_button" [disabled]="!loginForm.valid" (click)="login(loginForm.value)">
                 Acceder
             </button>
         </form>
