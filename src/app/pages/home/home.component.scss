@@ -34,3 +34,17 @@
     flex: 1;
     padding: 0 24px;
 }
+
+.add_list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+        line-height: unset !important;
+    }
+
+    mat-icon {
+        color: $color-primary-3;
+    }
+}

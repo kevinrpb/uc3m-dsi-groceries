@@ -2,7 +2,7 @@
 
   <div class="header">
     <dots-menu [items]="dotsMenuItems"></dots-menu>
-    <img (click)="auth.signOut()" class="logo" src="assets/images/reduced_logo.svg">
+    <img class="logo" src="assets/images/reduced_logo.svg">
   </div>
 
   <div class="user_info" *ngIf="auth.user$ | async as user">
@@ -13,6 +13,11 @@
 
   <mat-list class="lists_box">
     <list-card *ngFor="let l of lists" [list]="l"></list-card>
+    <div class="add_list">
+      <button mat-icon-button (click)="addList()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </div>
   </mat-list>
 
 </div>

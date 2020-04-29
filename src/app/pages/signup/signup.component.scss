@@ -46,3 +46,17 @@
         margin: 0;
     }
 }
+
+mat-button-toggle-group {
+    margin-bottom: calc(1.34375em + 8px);
+}
+
+mat-button-toggle {
+    width: calc(100%/3);
+    background-color: $bright;
+    color: $dark;
+}
+.mat-button-toggle-checked {
+    background-color: $color-primary-1;
+    color: $bright;
+}

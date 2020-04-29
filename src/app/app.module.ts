@@ -33,11 +33,13 @@ import { BottomMenuComponent } from './shared/components/bottom-menu/bottom-menu
 import { registerLocaleData } from '@angular/common';
 import locale_ES from '@angular/common/locales/es';
 import { ListCardComponent } from './shared/components/list-card/list-card.component';
+import { DialogComponent } from './shared/components/dialog/dialog.component';
 registerLocaleData(locale_ES, 'es');
 
 @NgModule({
   entryComponents: [
-    BottomMenuComponent
+    BottomMenuComponent,
+    DialogComponent
   ],
   declarations: [
     AppComponent,
@@ -48,7 +50,8 @@ registerLocaleData(locale_ES, 'es');
     BackArrowComponent,
     DotsMenuComponent,
     BottomMenuComponent,
-    ListCardComponent
+    ListCardComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,

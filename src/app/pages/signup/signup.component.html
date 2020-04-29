@@ -41,23 +41,13 @@
             <mat-divider style="margin-bottom: calc(8px + 1.34375em);"></mat-divider>
 
             <mat-form-field appearance="fill">
-                <mat-label>Nombre</mat-label>
-                <input matInput placeholder="Juan" formControlName="name">
+                <mat-label>Nombre completo</mat-label>
+                <input matInput placeholder="Juan García" formControlName="name">
                 <button mat-icon-button matSuffix disabled style="color: #000000">
                     <mat-icon>face</mat-icon>
                 </button>
                 <mat-error *ngIf="name.hasError('pattern') && !name.hasError('required')">Utilice solo letras</mat-error>
                 <mat-error *ngIf="name.hasError('required')">Este campo es obligatorio</mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-                <mat-label>Apellidos</mat-label>
-                <input matInput placeholder="García" formControlName="last_name">
-                <button mat-icon-button matSuffix disabled style="color: #000000">
-                    <mat-icon>credit_card</mat-icon>
-                </button>
-                <mat-error *ngIf="last_name.hasError('pattern') && !last_name.hasError('required')">Utilice solo letras</mat-error>
-                <mat-error *ngIf="last_name.hasError('required')">Este campo es obligatorio</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
@@ -89,6 +79,12 @@
                     <mat-error *ngIf="height.hasError('required')">Este campo es obligatorio</mat-error>
                 </mat-form-field>
             </div>
+
+            <mat-button-toggle-group formControlName="gender">
+                <mat-button-toggle value="0">Hombre</mat-button-toggle>
+                <mat-button-toggle value="1">Mujer</mat-button-toggle>
+                <mat-button-toggle value="2">Otro</mat-button-toggle>
+            </mat-button-toggle-group>
 
             <button mat-raised-button color="warn" class="full_button" [disabled]="!signupForm.valid" (click)="signup(signupForm.value)">
                 Regístrate

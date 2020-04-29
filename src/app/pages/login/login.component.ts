@@ -43,8 +43,9 @@ export class LoginComponent {
       .then(_ => {
         this.router.navigate(['/home'])
       })
-      .catch(error => {
-        console.log(error)
+      .catch((error: Error) => {
+        // TODO: Handle the error
+        throw error;
       })
   }
 

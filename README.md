@@ -3,7 +3,7 @@
 ## TODO
 ### Styles
 - [ ] Hacer iconos cuadrados
-- [ ] Poner fondo de body del mismo color que la app
+- [X] Poner fondo de body del mismo color que la app
 
 ### Auth
 - ...
