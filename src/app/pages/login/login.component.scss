@@ -1,0 +1,58 @@
+@import 'src/styles.scss';
+
+.body {
+    width: 100%;
+    height: 100%;
+    background-color: $bright;
+}
+
+.logo_box {
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+    
+.logo {
+    width: 50%;    
+    max-width: 350px;
+}
+
+.login_box {
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.welcome {
+    width: 250px;
+    text-align: center;
+}
+
+.form {
+    width: 250px;
+    margin: 16px 0;
+
+    mat-form-field {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    mat-form-field:last-child {
+        margin: 0;
+    }
+}
+
+.login_button {
+    width: 100%;
+    height: 45px;
+}
+
+.google_login_button {
+    width: 250px;
+    height: 45px;
+    margin-bottom: 24px;
+}

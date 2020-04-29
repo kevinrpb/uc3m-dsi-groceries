@@ -3,18 +3,26 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { LoginComponent } from './pages/login/login.component';
 
-import { AuthGuard } from './core/auth/auth.guard';
+import { LoggedGuard } from './core/auth/logged.guard';
+import { NotLoggedGuard } from './core/auth/not-logged.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: LoginComponent,
+    canActivate: [NotLoggedGuard]
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [LoggedGuard]
   },
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard]
+    canActivate: [LoggedGuard]
   }
 ];
 

@@ -6,6 +6,11 @@ import { AuthService } from '../../core/auth/auth.service';
   templateUrl: "./home.component.html",
   styleUrls: []
 })
+
 export class HomeComponent {
-  constructor(public auth: AuthService) {}
+
+  constructor(
+    public auth: AuthService
+  ) {}
+
 }

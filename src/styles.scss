@@ -1,21 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
-
 html, body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
 }
 
-mat-toolbar {
-	display: flex;
-}
+$bright: #FFFEF3;
+$dark: #000000;
 
-.spacer {
-	flex: 1 1 auto;
-}
+$color-primary-0: #E51B25;	
+$color-primary-1: #FB7279;
+$color-primary-2: #F14851;
+$color-primary-3: #B60A13;
+$color-primary-4: #8F0007;
 
-.menu-user-image {
-	height: 30px;
-	border-radius: 15px;
-	margin-right: 5px;
-}
+$color-complement-0: #26BF17;
+$color-complement-1: #6ED963;
+$color-complement-2: #49C93C;
+$color-complement-3: #169808;
+$color-complement-4: #0B7700;

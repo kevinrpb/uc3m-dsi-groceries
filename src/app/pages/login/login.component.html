@@ -1,0 +1,51 @@
+<div class="body">
+
+    <div class="logo_box">
+        <img class="logo" src="assets/images/logo.svg">
+    </div>
+
+    <div class="login_box">
+
+        <div class="welcome">
+            <div class="mat-title">Bienvenido 😊</div>
+            <div class="mat-h4" *ngIf="app.bigScreen">Accede y empieza a crear tus nuevas y mejoradas listas de la compra</div>
+        </div>
+
+        <form [formGroup]="loginForm" class="form">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="ejemplo@correo.com" formControlName="email">
+                <button mat-icon-button matSuffix>
+                    <mat-icon>email</mat-icon>
+                </button>
+                <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">El correo no es válido</mat-error>
+                <mat-error *ngIf="email.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input matInput [type]="!visible ? 'password' : 'text'" formControlName="password">
+                <button mat-icon-button matSuffix (click)="visible = !visible">
+                    <mat-icon>{{visible ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="password.hasError('minlength') && !password.hasError('required')">Mínimo 6 caracteres</mat-error>
+                <mat-error *ngIf="password.hasError('required')">Este campo es obligatorio</mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="warn" class="login_button" [disabled]="!loginForm.valid" (click)="login(loginForm.value)">
+                Acceder
+            </button>
+        </form>
+
+        <button mat-raised-button class="google_login_button" (click)="googleLogin()">
+            Accede con Google
+            <mat-icon>account_circle</mat-icon>
+        </button>
+
+        <button mat-button color="warn" (click)="goSignup()">
+            Crear nueva cuenta
+        </button>
+
+    </div>
+</div>
