@@ -1,4 +1,5 @@
 export interface List {
-    name: string,
-    shared: boolean
+  lid: string,
+  name: string,
+  shared: boolean
 }
