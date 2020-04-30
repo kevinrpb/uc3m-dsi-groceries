@@ -8,47 +8,50 @@ import {
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
 
-import { Observable, merge } from "rxjs";
-import { switchMap } from "rxjs/operators";
+import { Observable, merge, BehaviorSubject, of, combineLatest } from "rxjs";
+import { switchMap, filter, mergeMap } from "rxjs/operators";
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: "root"
 })
 export class ListService {
-  private _ownedLists$: Observable<List[]>;
-  private _sharedLists$: Observable<List[]>;
 
-  uid$: Observable<string>;
-  lists$: Observable<List[]>;
+  private _ownedLists$: BehaviorSubject<List[]> = new BehaviorSubject([])
+  private _sharedLists$: BehaviorSubject<List[]> = new BehaviorSubject([])
+
+  public uid$: BehaviorSubject<string> = new BehaviorSubject(null)
+  public lists$: BehaviorSubject<List[]> = new BehaviorSubject([])
 
   constructor(
     private auth: AuthService,
     private afs: AngularFirestore,
   ) {
-    auth.user$.pipe(switchMap(user => user ? user.uid : null));
+    auth.user$.pipe(switchMap(user => user ? of(user.uid) : of(null))).subscribe(this.uid$)
 
-    this._ownedLists$ = this.uid$.pipe(
+    this.uid$.pipe(filter(uid => uid !== null)).pipe(
       switchMap(uid =>
         afs.collection<List>("lists", reference =>
           reference.where("owner", "==", uid)
         ).valueChanges()
       )
-    );
+    ).subscribe(this._ownedLists$)
 
-    this._sharedLists$ = this.uid$.pipe(
-      switchMap(uid =>
+    this.uid$.pipe(filter(uid => uid !== null)).pipe(
+      switchMap(uid => 
         afs.collection<List>("lists", reference =>
           reference.where("participants", "array-contains", uid)
         ).valueChanges()
       )
-    );
+    ).subscribe(this._sharedLists$)
 
-    this.lists$ = merge(this._ownedLists$, this._sharedLists$);
+    combineLatest(this._ownedLists$, this._sharedLists$).pipe(
+      switchMap(([owned, shared]) => of(owned.concat(shared)))
+    ).subscribe(this.lists$)
   }
 
   async create(): Promise<string> {
-    const uid = await this.uid$.toPromise()
+    const uid = this.uid$.getValue()
     const lid = this.afs.createId()
     const list: List = {
       lid: lid,

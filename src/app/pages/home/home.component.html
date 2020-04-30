@@ -12,7 +12,7 @@
   </div>
 
   <mat-list class="lists_box">
-    <list-card *ngFor="let l of lists" [list]="l"></list-card>
+    <list-card *ngFor="let l of listService.lists$ | async" [list]="l"></list-card>
     <div class="add_list">
       <button mat-icon-button (click)="addList()">
         <mat-icon>add_circle</mat-icon>

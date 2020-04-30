@@ -4,6 +4,7 @@ import { MatSnackBar, MatDialog, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/mat
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
 import { List } from 'src/app/shared/models/list.model';
+import { ListService } from 'src/app/core/lists/lists.service';
 
 @Component({
   selector: "app-home",
@@ -14,9 +15,10 @@ import { List } from 'src/app/shared/models/list.model';
 export class HomeComponent {
 
   constructor(
-    public auth: AuthService,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    public auth:          AuthService,
+    private snackBar:     MatSnackBar,
+    private dialog:       MatDialog,
+    public listService:   ListService
   ) {}
 
   public dotsMenuItems: Array<MenuItem> = [
@@ -43,33 +45,6 @@ export class HomeComponent {
     }
   ]
 
-  public lists: Array<List> = [
-    {
-      lid: 'a',
-      name: 'Mensual',
-      owner: '',
-      shared: true,
-      participants: [],
-      products: []
-    },
-    {
-      lid: 'b',
-      name: 'Semanal',
-      owner: '',
-      shared: false,
-      participants: [],
-      products: []
-    },
-    {
-      lid: 'c',
-      name: 'Fiesta',
-      owner: '',
-      shared: true,
-      participants: [],
-      products: []
-    }
-  ]
-
   public addList() {
     const dialogRef = this.dialog.open(
       DialogComponent,
@@ -82,7 +57,7 @@ export class HomeComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'empty') {
-
+        this.listService.create()
       }
       else if (result === 'copy') {
         this.snackBar.open("Esta opción no ha sido implementada", "", {duration : 1500})
