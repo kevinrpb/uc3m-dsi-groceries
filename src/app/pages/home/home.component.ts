@@ -47,19 +47,25 @@ export class HomeComponent {
     {
       lid: 'a',
       name: 'Mensual',
+      owner: '',
       shared: true,
+      participants: [],
       products: []
     },
-    { 
+    {
       lid: 'b',
       name: 'Semanal',
+      owner: '',
       shared: false,
+      participants: [],
       products: []
     },
     {
       lid: 'c',
       name: 'Fiesta',
+      owner: '',
       shared: true,
+      participants: [],
       products: []
     }
   ]
