@@ -27,7 +27,7 @@ const routes: Routes = [
     canActivate: [LoggedGuard]
   },
   {
-    path: 'list/:id',
+    path: 'list/:lid',
     component: ListComponent,
     canActivate: [LoggedGuard]
   },

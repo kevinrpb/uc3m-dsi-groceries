@@ -25,9 +25,9 @@ export class ListService {
 
   constructor(
     private auth: AuthService,
-    private afs: AngularFirestore,
+    private afs:  AngularFirestore,
   ) {
-    auth.user$.pipe(switchMap(user => user ? of(user.uid) : of(null))).subscribe(this.uid$)
+    auth.user$.pipe(switchMap(user => user ? of(user.uid) : null)).subscribe(this.uid$)
 
     this.uid$.pipe(filter(uid => uid !== null)).pipe(
       switchMap(uid =>
@@ -46,7 +46,9 @@ export class ListService {
     ).subscribe(this._sharedLists$)
 
     combineLatest(this._ownedLists$, this._sharedLists$).pipe(
-      switchMap(([owned, shared]) => of(owned.concat(shared)))
+      switchMap(([owned, shared]) => 
+        of(owned.concat(shared))
+      )
     ).subscribe(this.lists$)
   }
 
@@ -57,7 +59,6 @@ export class ListService {
       lid: lid,
       name: 'Nueva Lista',
       owner: uid,
-      shared: false,
       participants: [],
       products: []
     }
@@ -73,6 +74,10 @@ export class ListService {
 
   async delete(lid: string) {
     await this.afs.collection<List>('lists').doc(lid).delete()
+  }
+
+  public getList(lid: string): List {
+    return this.lists$.getValue().find(list => list.lid === lid)
   }
 
 }

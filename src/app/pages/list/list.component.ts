@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { List, ListProductAmountType } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
+import { ListService } from 'src/app/core/lists/lists.service';
 
 @Component({
   selector: 'app-list',
@@ -10,7 +11,7 @@ import { MenuItem } from 'src/app/shared/models/menu-item.model';
 })
 export class ListComponent implements OnInit {
 
-  private id: string
+  public list: List
 
   public dotsMenuItems: Array<MenuItem> = [
     {
@@ -36,45 +37,14 @@ export class ListComponent implements OnInit {
     }
   ]
 
-
-  list: List = {
-    lid: '1',
-    name: 'Mensual',
-    owner: '',
-    shared: true,
-    participants: [],
-    products: [
-      {
-        pid: '1',
-        name: 'Galletas Cuétara',
-        price: 14.58,
-        amount: 1,
-        amountType: ListProductAmountType.units
-      },
-      {
-        pid: '2',
-        name: 'Galletas Cuétara',
-        price: 14.58,
-        amount: 1,
-        amountType: ListProductAmountType.units
-      },
-      {
-        pid: '3',
-        name: 'Galletas Cuétara',
-        price: 14.58,
-        amount: 1,
-        amountType: ListProductAmountType.units
-      }
-    ]
-  }
-
   constructor(
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private listService: ListService
   ) {}
 
   ngOnInit() {
     this.router.params.subscribe(params => {
-      this.id = params['id']
+      this.list = this.listService.getList(params['lid'])
     })
   }
 

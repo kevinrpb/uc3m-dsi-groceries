@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { List } from '../../models/list.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'list-card',
@@ -11,11 +12,11 @@ export class ListCardComponent {
   @Input() public list: List
 
   constructor(
-
+    private router: Router
   ) { }
 
   public goList() {
-    console.log('Go: ' + this.list.name)
+    this.router.navigate([`/list/${this.list.lid}`])
   }
 
   public exportList(event) {
