@@ -39,11 +39,37 @@ export class ListService {
     this._sharedLists$ = this.uid$.pipe(
       switchMap(uid =>
         afs.collection<List>("lists", reference =>
-          reference.where("owner", "==", uid)
+          reference.where("participants", "array-contains", uid)
         ).valueChanges()
       )
     );
 
     this.lists$ = merge(this._ownedLists$, this._sharedLists$);
   }
+
+  async create(): Promise<string> {
+    const uid = await this.uid$.toPromise()
+    const lid = this.afs.createId()
+    const list: List = {
+      lid: lid,
+      name: 'Nueva Lista',
+      owner: uid,
+      shared: false,
+      participants: [],
+      products: []
+    }
+
+    await this.afs.collection<List>("lists").doc(lid).set(list)
+
+    return lid;
+  }
+
+  async update(lid: string, newList: List) {
+    await this.afs.collection<List>('lists').doc(lid).set(newList)
+  }
+
+  async delete(lid: string) {
+    await this.afs.collection<List>('lists').doc(lid).delete()
+  }
+
 }

@@ -15,11 +15,12 @@
 ### Servicio Listas
 - [ ] Inyectar servicio
 - [X] Sincronización con listas en firestore (falta probarlo)
-- [ ] Permitir crear nueva lista
-- [ ] Permitir editar lista
+- [X] Ver como hacer `where` para sacar las compartidas
+- [X] Permitir crear nueva lista (falta probarlo)
+- [X] Permitir editar lista (falta probarlo)
   - [ ] Item por item
   - [ ] Vaciar completamente
-- [ ] Permitir eliminar lista
+- [X] Permitir eliminar lista (falta probarlo)
 - [ ] Permitir compartir lista
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
