@@ -6,6 +6,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
+import { registerLocaleData } from '@angular/common';
+import locale_ES from '@angular/common/locales/es';
+registerLocaleData(locale_ES, 'es');
+
 import 'firebase/firestore'
 
 import { MaterialModule } from './shared/material/material.module';
@@ -29,18 +33,16 @@ import { SignupComponent } from './pages/signup/signup.component';
 import { BackArrowComponent } from './shared/components/back-arrow/back-arrow.component';
 import { DotsMenuComponent } from './shared/components/dots-menu/dots-menu.component';
 import { BottomMenuComponent } from './shared/components/bottom-menu/bottom-menu.component';
-
-import { registerLocaleData } from '@angular/common';
-import locale_ES from '@angular/common/locales/es';
 import { ListCardComponent } from './shared/components/list-card/list-card.component';
 import { DialogComponent } from './shared/components/dialog/dialog.component';
 import { ListComponent } from './pages/list/list.component';
-registerLocaleData(locale_ES, 'es');
+import { ShareListComponent } from './shared/components/share-list/share-list.component';
 
 @NgModule({
   entryComponents: [
     BottomMenuComponent,
-    DialogComponent
+    DialogComponent,
+    ShareListComponent
   ],
   declarations: [
     AppComponent,
@@ -53,7 +55,8 @@ registerLocaleData(locale_ES, 'es');
     BottomMenuComponent,
     ListCardComponent,
     DialogComponent,
-    ListComponent
+    ListComponent,
+    ShareListComponent
   ],
   imports: [
     BrowserModule,

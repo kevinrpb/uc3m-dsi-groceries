@@ -1,6 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { MenuItem } from '../../models/menu-item.model';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-dialog',
@@ -10,8 +9,7 @@ import { MenuItem } from '../../models/menu-item.model';
 export class DialogComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public items: Array<MenuItem>
+    public dialogRef: MatDialogRef<DialogComponent>
   ) {}
 
   public onNoClick() {

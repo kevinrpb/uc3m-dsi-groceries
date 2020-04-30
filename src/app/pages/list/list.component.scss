@@ -5,6 +5,15 @@
     flex-direction: column;
 }
 
+.name_input {
+    text-align: center;
+    max-width: 60%;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+
 mat-tab-group {
     flex: 1;
     ::ng-deep .mat-tab-body-wrapper {

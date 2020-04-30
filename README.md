@@ -18,9 +18,12 @@
 - [X] Permitir crear nueva lista
 - [X] Permitir editar lista (falta probarlo)
   - [ ] Item por item
-  - [ ] Vaciar completamente
+  - [X] Vaciar completamente
 - [X] Permitir eliminar lista
+  - [ ] Al eliminar lista compartida, no se elimina, se deja de ser miembro
 - [X] Permitir compartir lista (falta probarlo)
+  - [ ] La función compartir debe encontrar el ucid recibiendo un email (el usuario no puede meter el ucid a mano)
+  - [ ] Función para obtener los objetos user de los miembros (displayName, email, foto) --> desde los ucid en el array de participantes (Lo ideal es que fuera Observable<{}[]>)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
 

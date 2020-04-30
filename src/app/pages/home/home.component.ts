@@ -26,14 +26,14 @@ export class HomeComponent {
       title: 'Perfil',
       subtitle: 'Revisa tu perfil y modifícalo',
       function: () => {
-        this.snackBar.open("Esta vista no ha sido implementada", "", {duration : 1500})
+        this.snackBar.open("Esta vista no ha sido implementada", "", { duration : 1500 })
       }
     },
     {
       title: 'F.A.Q.',
       subtitle: '¿Necesitas ayuda?',
       function: () => {
-        this.snackBar.open("Esta vista no ha sido implementada", "", {duration : 1500})
+        this.snackBar.open("Esta vista no ha sido implementada", "", { duration : 1500 })
       }
     },
     {
@@ -49,7 +49,6 @@ export class HomeComponent {
     const dialogRef = this.dialog.open(
       DialogComponent,
       {
-        data: this.dotsMenuItems,
         autoFocus: false,
         position: { bottom: '50px' },
         restoreFocus: false
@@ -61,7 +60,7 @@ export class HomeComponent {
         this.listService.create()
       }
       else if (result === 'copy') {
-        this.snackBar.open("Esta opción no ha sido implementada", "", {duration : 1500})
+        this.snackBar.open("Esta opción no ha sido implementada", "", { duration : 1500 })
       }
     })
   }

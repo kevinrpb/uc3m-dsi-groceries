@@ -81,10 +81,17 @@ export class ListService {
     return list
   }
 
+  public emptyList(lid: string) {
+    const list = this.lists$.getValue().find(list => list.lid === lid)
+    list.products = []
+    return this.update(lid, list)
+  }
+
+  // TODO: Debe recibir un email y encontrar el ucid asociado
   async addParticipant(lid: string, newUser: string) {
     await this.afs.collection<List>('lists').doc(lid).set({
       participants: firebase.firestore.FieldValue.arrayUnion(newUser)
-    })
+    }, {merge : true })
   }
 
 }

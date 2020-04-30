@@ -2,7 +2,7 @@
 
     <div class="header">
         <back-arrow></back-arrow>
-        <div class="mat-h2">{{l.name}}</div>
+        <input mat-input class="name_input mat-h2" [(ngModel)]="name" (blur)="updateName()">
         <dots-menu [items]="dotsMenuItems"></dots-menu>
     </div>
 
