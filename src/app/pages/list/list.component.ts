@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { List, ListProductAmountType } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { ListService } from 'src/app/core/lists/lists.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-list',
@@ -25,7 +26,13 @@ export class ListComponent implements OnInit {
       title: 'Eliminar',
       subtitle: 'Elimina esta lista (para siempre 😦)',
       function: () => {
-        console.log('Eliminar')
+        this.listService.delete(this.list.lid)
+          .then(_ => 
+            this.location.back()
+          )
+          .catch((error: Error) => {
+            throw error
+          })
       }
     },
     {
@@ -39,6 +46,7 @@ export class ListComponent implements OnInit {
 
   constructor(
     private router: ActivatedRoute,
+    private location: Location,
     private listService: ListService
   ) {}
 

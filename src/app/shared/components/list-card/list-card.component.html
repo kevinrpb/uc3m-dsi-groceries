@@ -3,7 +3,7 @@
         <div class="list_card_inner">
             <div class="mat-h3">{{list.name}}</div>
             <div class="icons">
-                <mat-icon [ngClass]="{'disabled' : list.participants.length > 0}">folder_shared</mat-icon>
+                <mat-icon [ngClass]="{'disabled' : list.participants.length === 0}">folder_shared</mat-icon>
                 <mat-icon class="button_color" (click)="exportList($event)">get_app</mat-icon>
             </div>
         </div>
