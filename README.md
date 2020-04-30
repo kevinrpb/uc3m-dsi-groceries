@@ -9,19 +9,18 @@
 - [ ] Tener en cuenta campo genero en el registro
 
 ### Servicio Productos
-- [ ] Crear modelo de producto
+- [X] Crear modelo de producto
 - [ ] Sincronización de productos con firestore
 
 ### Servicio Listas
-- [ ] Inyectar servicio
-- [X] Sincronización con listas en firestore (falta probarlo)
+- [X] Sincronización con listas en firestore
 - [X] Ver como hacer `where` para sacar las compartidas
-- [X] Permitir crear nueva lista (falta probarlo)
+- [X] Permitir crear nueva lista
 - [X] Permitir editar lista (falta probarlo)
   - [ ] Item por item
   - [ ] Vaciar completamente
-- [X] Permitir eliminar lista (falta probarlo)
-- [ ] Permitir compartir lista
+- [X] Permitir eliminar lista
+- [X] Permitir compartir lista (falta probarlo)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
 

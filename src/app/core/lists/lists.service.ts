@@ -1,15 +1,14 @@
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
 import { List } from "../../shared/models/list.model";
 
+import * as firebase from "firebase/app"
+
 import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-  AngularFirestoreDocument
+  AngularFirestore
 } from "@angular/fire/firestore";
 
-import { Observable, merge, BehaviorSubject, of, combineLatest } from "rxjs";
-import { switchMap, filter, mergeMap } from "rxjs/operators";
+import { BehaviorSubject, of, combineLatest } from "rxjs";
+import { switchMap, filter } from "rxjs/operators";
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -38,7 +37,7 @@ export class ListService {
     ).subscribe(this._ownedLists$)
 
     this.uid$.pipe(filter(uid => uid !== null)).pipe(
-      switchMap(uid => 
+      switchMap(uid =>
         afs.collection<List>("lists", reference =>
           reference.where("participants", "array-contains", uid)
         ).valueChanges()
@@ -46,7 +45,7 @@ export class ListService {
     ).subscribe(this._sharedLists$)
 
     combineLatest(this._ownedLists$, this._sharedLists$).pipe(
-      switchMap(([owned, shared]) => 
+      switchMap(([owned, shared]) =>
         of(owned.concat(shared))
       )
     ).subscribe(this.lists$)
@@ -78,6 +77,12 @@ export class ListService {
 
   public getList(lid: string): List {
     return this.lists$.getValue().find(list => list.lid === lid)
+  }
+
+  async addParticipant(lid: string, newUser: string) {
+    await this.afs.collection<List>('lists').doc(lid).set({
+      participants: firebase.firestore.FieldValue.arrayUnion(newUser)
+    })
   }
 
 }
