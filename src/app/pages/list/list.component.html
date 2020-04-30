@@ -1,8 +1,41 @@
 <div class="body">
 
     <div class="header">
-      <dots-menu [items]="dotsMenuItems"></dots-menu>
-      <img class="reduced_logo" src="assets/images/reduced_logo.svg">
+        <back-arrow></back-arrow>
+        <dots-menu [items]="dotsMenuItems"></dots-menu>
     </div>
-  
-  </div>
+
+    <mat-tab-group mat-stretch-tabs backgroundColor="warn" color="warn" headerPosition="below">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">speaker_notes</mat-icon>
+            </ng-template>
+            <div class="tab_container">
+                <mat-list class="lists_box">
+                    <div *ngFor="let p of list.products">
+                        {{p.name}}
+                    </div>
+                </mat-list>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">shopping_basket</mat-icon>
+            </ng-template>
+            <div class="tab_container">
+                Content2
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">favorite</mat-icon>
+            </ng-template>
+            <div class="tab_container">
+                Content3
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
+</div>

@@ -47,17 +47,20 @@ export class HomeComponent {
     {
       lid: 'a',
       name: 'Mensual',
-      shared: true
+      shared: true,
+      products: []
     },
     { 
       lid: 'b',
       name: 'Semanal',
-      shared: false
+      shared: false,
+      products: []
     },
     {
       lid: 'c',
       name: 'Fiesta',
-      shared: true
+      shared: true,
+      products: []
     }
   ]
 

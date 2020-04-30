@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { List } from 'src/app/shared/models/list.model';
+import { MenuItem } from 'src/app/shared/models/menu-item.model';
 
 @Component({
   selector: 'app-list',
@@ -10,6 +11,31 @@ import { List } from 'src/app/shared/models/list.model';
 export class ListComponent implements OnInit {
 
   private id: string
+
+  public dotsMenuItems: Array<MenuItem> = [
+    {
+      title: 'Vaciar',
+      subtitle: 'Elimina todos los productos de la lista',
+      function: () => {
+        console.log('Vaciar')
+      }
+    },
+    {
+      title: 'Eliminar',
+      subtitle: 'Elimina esta lista (para siempre 😦)',
+      function: () => {
+        console.log('Eliminar')
+      }
+    },
+    {
+      title: 'Compartir',
+      subtitle: 'Gestiona los miembros de la lista',
+      function: () => {
+        console.log('Compartir')
+      }
+    }
+  ]
+
 
   list: List = {
     lid: '1',
