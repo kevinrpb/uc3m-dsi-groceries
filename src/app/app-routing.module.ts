@@ -8,6 +8,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { ListComponent } from './pages/list/list.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,11 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [LoggedGuard]
+  },
+  {
+    path: 'list/:id',
+    component: ListComponent,
     canActivate: [LoggedGuard]
   },
   {

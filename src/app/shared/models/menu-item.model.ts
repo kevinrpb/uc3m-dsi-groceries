@@ -1,5 +1,5 @@
 export interface MenuItem {
-    title: string,
-    subtitle: string,
+    title: string
+    subtitle: string
     function: Function
 }

@@ -34,6 +34,7 @@ import { registerLocaleData } from '@angular/common';
 import locale_ES from '@angular/common/locales/es';
 import { ListCardComponent } from './shared/components/list-card/list-card.component';
 import { DialogComponent } from './shared/components/dialog/dialog.component';
+import { ListComponent } from './pages/list/list.component';
 registerLocaleData(locale_ES, 'es');
 
 @NgModule({
@@ -51,7 +52,8 @@ registerLocaleData(locale_ES, 'es');
     DotsMenuComponent,
     BottomMenuComponent,
     ListCardComponent,
-    DialogComponent
+    DialogComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import { AuthService } from '../../core/auth/auth.service';
 import { MatSnackBar, MatDialog, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { DialogComponent } from 'src/app/shared/components/dialog/dialog.component';
+import { List } from 'src/app/shared/models/list.model';
 
 @Component({
   selector: "app-home",
@@ -27,7 +28,7 @@ export class HomeComponent {
       }
     },
     {
-      title: 'F.A.Q',
+      title: 'F.A.Q.',
       subtitle: '¿Necesitas ayuda?',
       function: () => {
         this.snackBar.open("Esta vista no ha sido implementada", "", {duration : 1500})
@@ -42,16 +43,19 @@ export class HomeComponent {
     }
   ]
 
-  public lists: any = [
+  public lists: Array<List> = [
     {
+      lid: 'a',
       name: 'Mensual',
       shared: true
     },
     { 
+      lid: 'b',
       name: 'Semanal',
       shared: false
     },
     {
+      lid: 'c',
       name: 'Fiesta',
       shared: true
     }
@@ -69,7 +73,7 @@ export class HomeComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'empty') {
-        
+
       }
       else if (result === 'copy') {
         this.snackBar.open("Esta opción no ha sido implementada", "", {duration : 1500})

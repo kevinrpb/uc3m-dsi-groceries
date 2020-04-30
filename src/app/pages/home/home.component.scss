@@ -5,13 +5,6 @@
     flex-direction: column;
 }
 
-.logo {
-    position: absolute;
-    top: 20px;
-    left: 24px;
-    width: 34px;
-}
-
 .user_info {
     display: flex;
     justify-content: center;
@@ -33,12 +26,14 @@
 .lists_box {
     flex: 1;
     padding: 0 24px;
+    overflow-y: scroll;
 }
 
 .add_list {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 24px;
 
     button {
         line-height: unset !important;
