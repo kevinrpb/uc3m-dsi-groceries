@@ -76,8 +76,10 @@ export class ListService {
     await this.afs.collection<List>('lists').doc(lid).delete()
   }
 
-  public getList(lid: string): List {
-    return this.lists$.getValue().find(list => list.lid === lid)
+  public getList(lid: string): BehaviorSubject<List> {
+    const list: BehaviorSubject<List> = new BehaviorSubject(null)
+    this.lists$.pipe(switchMap(lists => of(lists.find(list => list.lid === lid)))).subscribe(list)
+    return list
   }
 
 }

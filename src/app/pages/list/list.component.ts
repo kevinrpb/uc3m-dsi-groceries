@@ -4,6 +4,7 @@ import { List, ListProductAmountType } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { ListService } from 'src/app/core/lists/lists.service';
 import { Location } from '@angular/common';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -12,7 +13,13 @@ import { Location } from '@angular/common';
 })
 export class ListComponent implements OnInit {
 
-  public list: List
+  constructor(
+    private router:       ActivatedRoute,
+    private location:     Location,
+    private listService:  ListService
+  ) {}
+
+  public list: BehaviorSubject<List>
 
   public dotsMenuItems: Array<MenuItem> = [
     {
@@ -26,7 +33,7 @@ export class ListComponent implements OnInit {
       title: 'Eliminar',
       subtitle: 'Elimina esta lista (para siempre 😦)',
       function: () => {
-        this.listService.delete(this.list.lid)
+        this.listService.delete(this.list.getValue().lid)
           .then(_ => 
             this.location.back()
           )
@@ -43,12 +50,6 @@ export class ListComponent implements OnInit {
       }
     }
   ]
-
-  constructor(
-    private router: ActivatedRoute,
-    private location: Location,
-    private listService: ListService
-  ) {}
 
   ngOnInit() {
     this.router.params.subscribe(params => {

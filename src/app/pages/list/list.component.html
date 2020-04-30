@@ -2,6 +2,7 @@
 
     <div class="header">
         <back-arrow></back-arrow>
+        <div class="mat-h2">{{list.getValue().name}}</div>
         <dots-menu [items]="dotsMenuItems"></dots-menu>
     </div>
 
@@ -12,7 +13,7 @@
             </ng-template>
             <div class="tab_container">
                 <mat-list class="lists_box">
-                    <div *ngFor="let p of list.products">
+                    <div *ngFor="let p of list.getValue().products">
                         {{p.name}}
                     </div>
                 </mat-list>

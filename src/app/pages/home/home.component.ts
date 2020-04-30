@@ -51,7 +51,8 @@ export class HomeComponent {
       {
         data: this.dotsMenuItems,
         autoFocus: false,
-        position: {bottom: '50px'}
+        position: { bottom: '50px' },
+        restoreFocus: false
       }
     )
 
