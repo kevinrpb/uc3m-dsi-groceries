@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { List } from 'src/app/shared/models/list.model';
+import { List, ListProduct, ListProductAmountType } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { ListService } from 'src/app/core/lists/lists.service';
 import { Location } from '@angular/common';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ShareListComponent } from 'src/app/shared/components/share-list/share-list.component';
 import { FormControl } from '@angular/forms';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, switchMap } from 'rxjs/operators';
 import { Product, Rating } from 'src/app/shared/models/product.model';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ProductsService } from 'src/app/core/lists/products.service';
@@ -31,7 +31,8 @@ export class ListComponent implements OnInit {
 
   public resetPosition: {} = {x : 0, y : 0}
 
-  public list: BehaviorSubject<List>
+  public list: BehaviorSubject<List> = new BehaviorSubject(null);
+  public listProducts: ListProduct[] = [];
   public name: string
 
   public dotsMenuItems: Array<MenuItem> = [
@@ -95,11 +96,18 @@ export class ListComponent implements OnInit {
   public searchbarControl: FormControl = new FormControl()
 
   ngOnInit() {
-    this.router.params.subscribe(params => {
-      this.list = this.listService.getList(params['lid'])
-      console.log(this.list.getValue())
-      this.name = this.list.getValue().name
+    this.list.subscribe(list => {
+      if (!list) return;
+
+      this.name = list.name
+      this.listProducts = list.products
     })
+
+    this.router.params.subscribe(params => {
+      if (!params) return;
+
+      this.listService.getList(params['lid']).subscribe(this.list);
+    });
 
     this.searchbarControl.valueChanges.subscribe(value => this.filter(value));
 
@@ -118,9 +126,10 @@ export class ListComponent implements OnInit {
 
   public addProduct(product: Product) {
     const { lid } = this.list.getValue()
-    const { pid, name, price } = product;
+    const { pid, name, price, healthData } = product;
+    const { rating } = healthData;
 
-    this.listService.addProduct(lid, { pid, name, price, amount: 1 })
+    this.listService.addProduct(lid, { pid, name, price, rating, amount: 1, amountType: ListProductAmountType.units })
       .then(_ => {
         this.snackBar.open('Producto añadido', "", { duration: 500 })
       })
@@ -129,12 +138,21 @@ export class ListComponent implements OnInit {
       })
   }
 
-  // public delete(event: CdkDragEnd, pid: string) {
-  //   if (Math.abs(event.distance.x) > 125)
-  //     this.options = this.options.filter(option => option.pid !== pid)
-  //   else {
-  //     this.resetPosition = {x : 0, y : 0}
-  //   }
-  // }
+  public delete(event: CdkDragEnd, pid: string) {
+    if (Math.abs(event.distance.x) > 125) {
+      const { lid, products } = this.list.getValue();
+      const product = products.find(p => p.pid === pid);
+
+      this.listService.removeProduct(lid, product)
+        .then(_ => {
+          this.snackBar.open("Producto eliminado", "", { duration: 500 })
+        })
+        .catch(error => {
+          throw error;
+        })
+    } else {
+      this.resetPosition = {x : 0, y : 0}
+    }
+  }
 
 }

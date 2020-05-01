@@ -21,7 +21,7 @@
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptions | async; let last = last;" [value]="" (click)="addProduct(option)">
                             <span class="rating">{{option.healthData.rating}}</span>
-                            <strong>{{option.name}}</strong>
+                            <strong class="name">{{option.name}}</strong>
                             <div class="price">{{option.price}}€</div>
                             <mat-divider *ngIf="!last"></mat-divider>
                         </mat-option>
@@ -29,15 +29,15 @@
                 </mat-form-field>
 
                 <mat-list class="products_box">
-                    <div *ngFor="let o of options" cdkDragLockAxis="x" cdkDrag [cdkDragFreeDragPosition]="resetPosition" (cdkDragEnded)="delete($event, o.pid)">
+                    <div *ngFor="let l of listProducts" cdkDragLockAxis="x" cdkDrag [cdkDragFreeDragPosition]="resetPosition" (cdkDragEnded)="delete($event, l.pid)">
                         <mat-list-item>
                             <span mat-line>
-                                <strong style="float: left;">{{o.name}}</strong>
-                                <span style="float: right; font-size: 14px;">{{o.price}}€</span>
+                                <strong class="name" style="float: left;">{{l.name}}</strong>
+                                <span class="price" style="float: right; font-size: 14px;">{{l.price}}€</span>
                             </span>
-                            <span mat-line>
-                                <span style="float: left;">{{o.healthData.amountBase}}gr</span>
-                                <span style="float: right; font-size: 17px;">{{o.healthData.rating}}</span>
+                            <span mat-line style="margin-top: 3px;">
+                                <span style="float: left;">{{l.amount}}</span>
+                                <span style="float: right; font-size: 17px;">{{l.rating}}</span>
                             </span>
                         </mat-list-item>
                         <mat-divider></mat-divider>
