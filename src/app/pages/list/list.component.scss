@@ -22,16 +22,16 @@ mat-tab-group {
 }
 
 .tab_container {
-    height: 100%;
+    height: 95%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 0 40px;
+    padding: 5% 40px 0;
 }
 
 .searchbar {
-    position: fixed
-    ;width: calc(100% - 80px);
+    position: fixed;
+    width: calc(100% - 80px);
 
     ::ng-deep .mat-form-field-flex {
         padding: 0em 1em;
@@ -62,4 +62,9 @@ mat-option {
     .price {
         float: right;
     }
+}
+
+.products_box {
+    width: 100%;
+    padding-top: calc(5% + 50px);
 }

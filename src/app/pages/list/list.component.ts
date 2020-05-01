@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { List, ListProductAmountType } from 'src/app/shared/models/list.model';
+import { List } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { ListService } from 'src/app/core/lists/lists.service';
 import { Location } from '@angular/common';
@@ -10,6 +10,7 @@ import { ShareListComponent } from 'src/app/shared/components/share-list/share-l
 import { FormControl } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 import { Product, Rating } from 'src/app/shared/models/product.model';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-list',
@@ -25,6 +26,8 @@ export class ListComponent implements OnInit {
     private snackBar:     MatSnackBar,
     private dialog:       MatDialog
   ) {}
+
+  public resetPosition: {} = {x : 0, y : 0}
 
   public list: BehaviorSubject<List>
   public name: string
@@ -118,7 +121,7 @@ export class ListComponent implements OnInit {
       tags: []
     }
   ]
-  
+
   ngOnInit() {
     this.router.params.subscribe(params => {
       this.list = this.listService.getList(params['lid'])
@@ -144,6 +147,14 @@ export class ListComponent implements OnInit {
 
   public addProduct(product: Product) {
     console.log(product.name)
+  }
+
+  public delete(event: CdkDragEnd,  pid: string) {
+    if (Math.abs(event.distance.x) > 125)
+      this.options = this.options.filter(option => option.pid !== pid)
+    else {
+      this.resetPosition = {x : 0, y : 0}
+    }
   }
 
 }
