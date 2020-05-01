@@ -31,33 +31,6 @@ export class ListComponent implements OnInit {
 
   public dotsMenuItems: Array<MenuItem> = [
     {
-      title: 'Vaciar',
-      subtitle: 'Elimina todos los productos de la lista',
-      function: () => {
-        this.listService.emptyList(this.list.getValue().lid)
-          .then(_ => {
-            this.snackBar.open("La lista ha sido vaciada", "", { duration : 1500 })
-          })
-          .catch((error: Error) => {
-            throw error
-          })
-      }
-    },
-    {
-      title: 'Eliminar',
-      subtitle: 'Elimina esta lista (para siempre 😦)',
-      function: () => {
-        this.listService.delete(this.list.getValue().lid)
-          .then(_ => {
-            this.location.back()
-            this.snackBar.open("La lista ha sido eliminada", "", { duration : 1500 })
-          })
-          .catch((error: Error) => {
-            throw error
-          })
-      }
-    },
-    {
       title: 'Compartir',
       subtitle: 'Gestiona los miembros de la lista',
       function: () => {
@@ -83,9 +56,37 @@ export class ListComponent implements OnInit {
           }
         )
       }
+    },
+    {
+      title: 'Vaciar',
+      subtitle: 'Elimina todos los productos de la lista',
+      function: () => {
+        this.listService.emptyList(this.list.getValue().lid)
+          .then(_ => {
+            this.snackBar.open("La lista ha sido vaciada", "", { duration : 1500 })
+          })
+          .catch((error: Error) => {
+            throw error
+          })
+      }
+    },
+    {
+      title: 'Eliminar',
+      subtitle: 'Elimina esta lista (para siempre 😦)',
+      function: () => {
+        this.listService.delete(this.list.getValue().lid)
+          .then(_ => {
+            this.location.back()
+            this.snackBar.open("La lista ha sido eliminada", "", { duration : 1500 })
+          })
+          .catch((error: Error) => {
+            throw error
+          })
+      }
     }
   ]
 
+  public filteredOptions: Observable<Array<Product>>
   public searchbarControl: FormControl = new FormControl()
   public options: Array<Product> = [
     {
@@ -117,8 +118,7 @@ export class ListComponent implements OnInit {
       tags: []
     }
   ]
-  public filteredOptions: Observable<Array<Product>>
-
+  
   ngOnInit() {
     this.router.params.subscribe(params => {
       this.list = this.listService.getList(params['lid'])
