@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { List, ListProductAmountType } from '../../models/list.model';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { ClipboardService } from 'ngx-clipboard'
 
 @Component({
   selector: 'list-card',
@@ -15,8 +14,7 @@ export class ListCardComponent {
 
   constructor(
     private router: Router,
-    private snackBar: MatSnackBar,
-    private clipboard: ClipboardService
+    private snackBar: MatSnackBar
   ) { }
 
   public goList() {
@@ -25,10 +23,20 @@ export class ListCardComponent {
 
   public exportList(event: Event) {
     event.stopPropagation()
-    let listTxt = `>> GROOKEPY ✌️ <<\nLista " ${this.list.name} ", con los productos: ${this.list.products}`
+    var listTxt = `>> GROOKEPY ✌️ <<\nLista " ${this.list.name} ", con los productos: ${this.list.products}`
     this.list.products.forEach(p => listTxt += `\n> ${p.name} , ${p.amount}${(p.amountType == ListProductAmountType.units) ? "unidades" : "gr."}`)
-    this.clipboard.copyFromContent(listTxt)
+    this.copyToClipboard(listTxt)    
     this.snackBar.open("La lista ha sido copiada al portapapeles", "", { duration : 1500})
+  }
+
+  private copyToClipboard(text: string) {
+    if (!navigator.clipboard) {
+      return
+    }
+    navigator.clipboard.writeText(text)
+      .catch((error: Error) => {
+        throw error
+      })
   }
 
 }
