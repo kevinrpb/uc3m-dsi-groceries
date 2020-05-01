@@ -30,8 +30,6 @@ export class ListComponent implements OnInit {
 
   public Rating = Rating
 
-  public resetPosition: {} = {x : 0, y : 0}
-
   public list: BehaviorSubject<List> = new BehaviorSubject(null);
   public listProducts: ListProduct[] = [];
   public name: string
@@ -138,11 +136,12 @@ export class ListComponent implements OnInit {
       })
   }
 
-  public delete(event: CdkDragEnd, pid: string) {
-    if (Math.abs(event.distance.x) > 125) {
+  public delete(event: any, pid: string) {
+    document.getElementById(pid).style.transform = `translate3d(${event.velocity > 0 ? '' : '-'}100%, 0, 0)`
+    setTimeout(_ => {
       const { lid, products } = this.list.getValue();
       const product = products.find(p => p.pid === pid);
-
+  
       this.listService.removeProduct(lid, product)
         .then(_ => {
           this.snackBar.open("Producto eliminado", "", { duration: 500 })
@@ -150,9 +149,7 @@ export class ListComponent implements OnInit {
         .catch(error => {
           throw error;
         })
-    } else {
-      this.resetPosition = {x : 0, y : 0}
-    }
+    }, 250)
   }
 
 }

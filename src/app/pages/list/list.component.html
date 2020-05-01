@@ -28,23 +28,21 @@
                     </mat-autocomplete>
                 </mat-form-field>
 
-                <cdk-virtual-scroll-viewport itemSize="50">
-                    <mat-list class="products_box">
-                        <div *ngFor="let l of listProducts" cdkDragLockAxis="x" cdkDrag [cdkDragFreeDragPosition]="resetPosition" (cdkDragEnded)="delete($event, l.pid)">
-                            <mat-list-item >
-                                <span mat-line>
-                                    <strong class="name" style="float: left;">{{l.name}}</strong>
-                                    <span class="price" style="float: right; font-size: 14px;">{{l.price}}€</span>
-                                </span>
-                                <span mat-line style="margin-top: 3px;">
-                                    <span style="float: left;">{{l.amount}}</span>
-                                    <span style="float: right; font-size: 17px;">{{Rating[l.rating]}}</span>
-                                </span>
-                            </mat-list-item>
-                            <mat-divider></mat-divider>
-                        </div>
-                    </mat-list>
-                </cdk-virtual-scroll-viewport>
+                <mat-list class="products_box">
+                    <div *ngFor="let l of listProducts" [id]="l.pid" (swipeleft)="delete($event, l.pid)" (swiperight)="delete($event, l.pid)" class="product">
+                        <mat-list-item>
+                            <span mat-line>
+                                <strong class="name" style="float: left;">{{l.name}}</strong>
+                                <span class="price" style="float: right; font-size: 14px;">{{l.price}}€</span>
+                            </span>
+                            <span mat-line style="margin-top: 3px;">
+                                <span style="float: left;">{{l.amount}}</span>
+                                <span style="float: right; font-size: 1px;">{{Rating[l.rating]}}</span>
+                            </span>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    </div>
+                </mat-list>
 
             </div>
         </mat-tab>

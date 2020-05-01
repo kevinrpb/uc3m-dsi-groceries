@@ -89,15 +89,19 @@ mat-option {
     overflow-y: auto;
     padding: 0;
     margin-top: calc(5% + 50px);
+}
 
-    .name {
-      width: calc(100% - 43px);
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
+.product {
+  transition: transform .25s ease-in-out;
 
-    .price {
-      margin-left: 8px;
-      width: 35px;
-    }
+  .name {
+    width: calc(100% - 43px);
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .price {
+    margin-left: 8px;
+    width: 35px;
+  }
 }

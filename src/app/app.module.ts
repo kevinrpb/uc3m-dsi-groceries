@@ -12,6 +12,15 @@ registerLocaleData(locale_ES, 'es');
 
 import 'firebase/firestore'
 
+import 'hammerjs'
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+export class HammerConfig extends HammerGestureConfig  {
+    overrides = <any>{
+        'pinch':  { enable: false },
+        'rotate': { enable: false }
+    }
+}
+
 import { MaterialModule } from './shared/material/material.module';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 
@@ -37,6 +46,7 @@ import { ListCardComponent } from './shared/components/list-card/list-card.compo
 import { DialogComponent } from './shared/components/dialog/dialog.component';
 import { ListComponent } from './pages/list/list.component';
 import { ShareListComponent } from './shared/components/share-list/share-list.component';
+
 
 @NgModule({
   entryComponents: [
@@ -74,7 +84,11 @@ import { ShareListComponent } from './shared/components/share-list/share-list.co
     LoggedGuard,
     NotLoggedGuard,
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher} ,
-    { provide: LOCALE_ID, useValue: 'es' }
+    { provide: LOCALE_ID, useValue: 'es' },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: HammerConfig
+    }
   ],
   bootstrap: [
     AppComponent
