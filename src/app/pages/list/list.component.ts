@@ -119,6 +119,118 @@ export class ListComponent implements OnInit {
       name: 'Galletas Oreo',
       price: 14.58,
       tags: []
+    },
+    {
+      pid: '2',
+      category: 'a',
+      healthData: {
+        rating: Rating.dontDoIt,
+        amountBase: 100,
+        carbos: 45,
+        fat: 15,
+        proteins: 5
+      },
+      name: 'Galletas Oreo',
+      price: 14.58,
+      tags: []
+    },
+    {
+      pid: '2',
+      category: 'a',
+      healthData: {
+        rating: Rating.dontDoIt,
+        amountBase: 100,
+        carbos: 45,
+        fat: 15,
+        proteins: 5
+      },
+      name: 'Galletas Oreo',
+      price: 14.58,
+      tags: []
+    },
+    {
+      pid: '2',
+      category: 'a',
+      healthData: {
+        rating: Rating.dontDoIt,
+        amountBase: 100,
+        carbos: 45,
+        fat: 15,
+        proteins: 5
+      },
+      name: 'Galletas Oreo',
+      price: 14.58,
+      tags: []
+    },
+    {
+      pid: '2',
+      category: 'a',
+      healthData: {
+        rating: Rating.dontDoIt,
+        amountBase: 100,
+        carbos: 45,
+        fat: 15,
+        proteins: 5
+      },
+      name: 'Galletas Oreo',
+      price: 14.58,
+      tags: []
+    },
+    {
+      pid: '2',
+      category: 'a',
+      healthData: {
+        rating: Rating.dontDoIt,
+        amountBase: 100,
+        carbos: 45,
+        fat: 15,
+        proteins: 5
+      },
+      name: 'Galletas Oreo',
+      price: 14.58,
+      tags: []
+    },
+    {
+      pid: '2',
+      category: 'a',
+      healthData: {
+        rating: Rating.dontDoIt,
+        amountBase: 100,
+        carbos: 45,
+        fat: 15,
+        proteins: 5
+      },
+      name: 'Galletas Oreo',
+      price: 14.58,
+      tags: []
+    },
+    {
+      pid: '2',
+      category: 'a',
+      healthData: {
+        rating: Rating.dontDoIt,
+        amountBase: 100,
+        carbos: 45,
+        fat: 15,
+        proteins: 5
+      },
+      name: 'Galletas Oreo',
+      price: 14.58,
+      tags: []
+    },
+    {
+      pid: '2',
+      category: 'a',
+      healthData: {
+        rating: Rating.dontDoIt,
+        amountBase: 100,
+        carbos: 45,
+        fat: 15,
+        proteins: 5
+      },
+      name: 'Galletas Oreo',
+      price: 14.58,
+      tags: []
     }
   ]
 
@@ -149,7 +261,7 @@ export class ListComponent implements OnInit {
     console.log(product.name)
   }
 
-  public delete(event: CdkDragEnd,  pid: string) {
+  public delete(event: CdkDragEnd, pid: string) {
     if (Math.abs(event.distance.x) > 125)
       this.options = this.options.filter(option => option.pid !== pid)
     else {
