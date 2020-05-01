@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { List } from "../../shared/models/list.model";
+import { List, ListProduct } from "../../shared/models/list.model";
 
 import * as firebase from "firebase/app"
 
@@ -75,23 +75,41 @@ export class ListService {
     await this.afs.collection<List>('lists').doc(lid).delete()
   }
 
-  public getList(lid: string): BehaviorSubject<List> {
+  getList(lid: string): BehaviorSubject<List> {
     const list: BehaviorSubject<List> = new BehaviorSubject(null)
-    this.lists$.pipe(switchMap(lists => of(lists.find(list => list.lid === lid)))).subscribe(list)
+
+    this.lists$.pipe(
+      switchMap(lists => of(lists.find(list => list.lid === lid)))
+    ).subscribe(list)
+
     return list
   }
 
-  public emptyList(lid: string) {
+  async emptyList(lid: string) {
     const list = this.lists$.getValue().find(list => list.lid === lid)
+
     list.products = []
-    return this.update(lid, list)
+
+    await this.update(lid, list)
+  }
+
+  async addProduct(lid: string, product: ListProduct) {
+    await this.afs.collection<List>('lists').doc(lid).update({
+      products: firebase.firestore.FieldValue.arrayUnion(product)
+    })
+  }
+
+  async removeProduct(lid: string, product: ListProduct) {
+    await this.afs.collection<List>('lists').doc(lid).update({
+      products: firebase.firestore.FieldValue.arrayRemove(product)
+    })
   }
 
   // TODO: Debe recibir un email y encontrar el ucid asociado
   async addParticipant(lid: string, newUser: string) {
-    await this.afs.collection<List>('lists').doc(lid).set({
+    await this.afs.collection<List>('lists').doc(lid).update({
       participants: firebase.firestore.FieldValue.arrayUnion(newUser)
-    }, {merge : true })
+    })
   }
 
 }

@@ -97,6 +97,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.router.params.subscribe(params => {
       this.list = this.listService.getList(params['lid'])
+      console.log(this.list.getValue())
       this.name = this.list.getValue().name
     })
 
@@ -116,15 +117,24 @@ export class ListComponent implements OnInit {
   }
 
   public addProduct(product: Product) {
-    console.log(product.name)
+    const { lid } = this.list.getValue()
+    const { pid, name, price } = product;
+
+    this.listService.addProduct(lid, { pid, name, price, amount: 1 })
+      .then(_ => {
+        this.snackBar.open('Producto añadido', "", { duration: 500 })
+      })
+      .catch(error => {
+        throw error;
+      })
   }
 
-  public delete(event: CdkDragEnd, pid: string) {
-    // if (Math.abs(event.distance.x) > 125)
-    //   this.options = this.options.filter(option => option.pid !== pid)
-    // else {
-    //   this.resetPosition = {x : 0, y : 0}
-    // }
-  }
+  // public delete(event: CdkDragEnd, pid: string) {
+  //   if (Math.abs(event.distance.x) > 125)
+  //     this.options = this.options.filter(option => option.pid !== pid)
+  //   else {
+  //     this.resetPosition = {x : 0, y : 0}
+  //   }
+  // }
 
 }

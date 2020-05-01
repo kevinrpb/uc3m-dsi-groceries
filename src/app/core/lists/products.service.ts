@@ -25,8 +25,6 @@ export class ProductsService {
 
     combineLatest(this.products$, this._filterKeywords).pipe(
       switchMap(([products, keywords]) => {
-        console.log(products, keywords)
-
         if (keywords.length < 1) return of([]);
 
         let _products = products.filter(product => this.checkFilter(product, keywords));
