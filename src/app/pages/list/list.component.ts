@@ -8,7 +8,6 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ShareListComponent } from 'src/app/shared/components/share-list/share-list.component';
 import { FormControl } from '@angular/forms';
-import { startWith, map, switchMap } from 'rxjs/operators';
 import { Product, Rating } from 'src/app/shared/models/product.model';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ProductsService } from 'src/app/core/lists/products.service';
@@ -27,7 +26,9 @@ export class ListComponent implements OnInit {
     private productService: ProductsService,
     private snackBar:       MatSnackBar,
     private dialog:         MatDialog
-  ) {}
+  ) { }
+
+  public Rating = Rating
 
   public resetPosition: {} = {x : 0, y : 0}
 
@@ -105,7 +106,6 @@ export class ListComponent implements OnInit {
 
     this.router.params.subscribe(params => {
       if (!params) return;
-
       this.listService.getList(params['lid']).subscribe(this.list);
     });
 

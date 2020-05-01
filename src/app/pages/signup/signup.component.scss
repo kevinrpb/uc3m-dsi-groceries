@@ -16,7 +16,6 @@
 .form {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
     width: 250px;
     padding-bottom: 24px;
 
@@ -56,6 +55,7 @@ mat-button-toggle {
     background-color: $bright;
     color: $dark;
 }
+
 .mat-button-toggle-checked {
     background-color: $color-primary-1;
     color: $bright;

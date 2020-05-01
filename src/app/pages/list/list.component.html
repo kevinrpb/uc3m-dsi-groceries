@@ -20,7 +20,7 @@
                     </button>
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let option of filteredOptions | async; let last = last;" [value]="" (click)="addProduct(option)">
-                            <span class="rating">{{option.healthData.rating}}</span>
+                            <span class="rating">{{Rating[option.healthData.rating]}}</span>
                             <strong class="name">{{option.name}}</strong>
                             <div class="price">{{option.price}}€</div>
                             <mat-divider *ngIf="!last"></mat-divider>
@@ -28,21 +28,23 @@
                     </mat-autocomplete>
                 </mat-form-field>
 
-                <mat-list class="products_box">
-                    <div *ngFor="let l of listProducts" cdkDragLockAxis="x" cdkDrag [cdkDragFreeDragPosition]="resetPosition" (cdkDragEnded)="delete($event, l.pid)">
-                        <mat-list-item>
-                            <span mat-line>
-                                <strong class="name" style="float: left;">{{l.name}}</strong>
-                                <span class="price" style="float: right; font-size: 14px;">{{l.price}}€</span>
-                            </span>
-                            <span mat-line style="margin-top: 3px;">
-                                <span style="float: left;">{{l.amount}}</span>
-                                <span style="float: right; font-size: 17px;">{{l.rating}}</span>
-                            </span>
-                        </mat-list-item>
-                        <mat-divider></mat-divider>
-                    </div>
-                </mat-list>
+                <cdk-virtual-scroll-viewport itemSize="50">
+                    <mat-list class="products_box">
+                        <div *ngFor="let l of listProducts" cdkDragLockAxis="x" cdkDrag [cdkDragFreeDragPosition]="resetPosition" (cdkDragEnded)="delete($event, l.pid)">
+                            <mat-list-item >
+                                <span mat-line>
+                                    <strong class="name" style="float: left;">{{l.name}}</strong>
+                                    <span class="price" style="float: right; font-size: 14px;">{{l.price}}€</span>
+                                </span>
+                                <span mat-line style="margin-top: 3px;">
+                                    <span style="float: left;">{{l.amount}}</span>
+                                    <span style="float: right; font-size: 17px;">{{Rating[l.rating]}}</span>
+                                </span>
+                            </mat-list-item>
+                            <mat-divider></mat-divider>
+                        </div>
+                    </mat-list>
+                </cdk-virtual-scroll-viewport>
 
             </div>
         </mat-tab>
