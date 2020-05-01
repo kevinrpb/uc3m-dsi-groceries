@@ -24,8 +24,8 @@ export class ListCardComponent {
   public exportList(event: Event) {
     event.stopPropagation()
     var listTxt = `>> GROOKEPY ✌️ <<\nLista " ${this.list.name} ", con los productos: ${this.list.products}`
-    this.list.products.forEach(p => listTxt += `\n> ${p.name} , ${p.amount}${(p.amountType == ListProductAmountType.units) ? "unidades" : "gr."}`)
-    this.copyToClipboard(listTxt)    
+    this.list.products.forEach(p => listTxt += `\n> ${p.name} , ${p.amount}${(p.amountType === ListProductAmountType.units) ? "unidades" : "gr."}`)
+    this.copyToClipboard(listTxt)
     this.snackBar.open("La lista ha sido copiada al portapapeles", "", { duration : 1500})
   }
 

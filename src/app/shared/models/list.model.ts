@@ -6,8 +6,9 @@ export interface ListProduct {
   pid: string
   name: string
   price: Number
-  amount: Number
+  rating: string
   amountType: ListProductAmountType
+  amount: Number
 }
 
 export interface List {

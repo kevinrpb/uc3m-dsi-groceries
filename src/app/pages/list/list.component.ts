@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { List } from 'src/app/shared/models/list.model';
+import { List, ListProduct, ListProductAmountType } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { ListService } from 'src/app/core/lists/lists.service';
 import { Location } from '@angular/common';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ShareListComponent } from 'src/app/shared/components/share-list/share-list.component';
 import { FormControl } from '@angular/forms';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, switchMap } from 'rxjs/operators';
 import { Product, Rating } from 'src/app/shared/models/product.model';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import { ProductsService } from 'src/app/core/lists/products.service';
 
 @Component({
   selector: 'app-list',
@@ -20,16 +21,18 @@ import { CdkDragEnd } from '@angular/cdk/drag-drop';
 export class ListComponent implements OnInit {
 
   constructor(
-    private router:       ActivatedRoute,
-    private location:     Location,
-    private listService:  ListService,
-    private snackBar:     MatSnackBar,
-    private dialog:       MatDialog
+    private router:         ActivatedRoute,
+    private location:       Location,
+    private listService:    ListService,
+    private productService: ProductsService,
+    private snackBar:       MatSnackBar,
+    private dialog:         MatDialog
   ) {}
 
   public resetPosition: {} = {x : 0, y : 0}
 
-  public list: BehaviorSubject<List>
+  public list: BehaviorSubject<List> = new BehaviorSubject(null);
+  public listProducts: ListProduct[] = [];
   public name: string
 
   public dotsMenuItems: Array<MenuItem> = [
@@ -89,54 +92,30 @@ export class ListComponent implements OnInit {
     }
   ]
 
-  public filteredOptions: Observable<Array<Product>>
+  public filteredOptions: Observable<Product[]>
   public searchbarControl: FormControl = new FormControl()
-  public options: Array<Product> = [
-    {
-      pid: '1',
-      category: 'a',
-      healthData: {
-        rating: Rating.bad,
-        amountBase: 100,
-        carbos: 45,
-        fat: 15,
-        proteins: 5
-      },
-      name: 'Galletas Fontaneda',
-      price: 14.58,
-      tags: []
-    },
-    {
-      pid: '2',
-      category: 'a',
-      healthData: {
-        rating: Rating.dontDoIt,
-        amountBase: 100,
-        carbos: 45,
-        fat: 15,
-        proteins: 5
-      },
-      name: 'Galletas Oreo',
-      price: 14.58,
-      tags: []
-    }
-  ]
 
   ngOnInit() {
-    this.router.params.subscribe(params => {
-      this.list = this.listService.getList(params['lid'])
-      this.name = this.list.getValue().name
+    this.list.subscribe(list => {
+      if (!list) return;
+
+      this.name = list.name
+      this.listProducts = list.products
     })
-    this.filteredOptions = this.searchbarControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this.filter(value))
-    )
+
+    this.router.params.subscribe(params => {
+      if (!params) return;
+
+      this.listService.getList(params['lid']).subscribe(this.list);
+    });
+
+    this.searchbarControl.valueChanges.subscribe(value => this.filter(value));
+
+    this.filteredOptions = this.productService.filteredProducts$.asObservable();
   }
 
-  private filter(value: string): Array<Product> {
-    if (!value) return []
-    const filterValue = value.toLowerCase()
-    return (value) ? this.options.filter(option => option.name.toLowerCase().includes(filterValue)) : []
+  private filter(value: string) {
+    this.productService.setFilter(value ? value.split(' ') : []);
   }
 
   public updateName() {
@@ -146,13 +125,32 @@ export class ListComponent implements OnInit {
   }
 
   public addProduct(product: Product) {
-    console.log(product.name)
+    const { lid } = this.list.getValue()
+    const { pid, name, price, healthData } = product;
+    const { rating } = healthData;
+
+    this.listService.addProduct(lid, { pid, name, price, rating, amount: 1, amountType: ListProductAmountType.units })
+      .then(_ => {
+        this.snackBar.open('Producto añadido', "", { duration: 500 })
+      })
+      .catch(error => {
+        throw error;
+      })
   }
 
   public delete(event: CdkDragEnd, pid: string) {
-    if (Math.abs(event.distance.x) > 125)
-      this.options = this.options.filter(option => option.pid !== pid)
-    else {
+    if (Math.abs(event.distance.x) > 125) {
+      const { lid, products } = this.list.getValue();
+      const product = products.find(p => p.pid === pid);
+
+      this.listService.removeProduct(lid, product)
+        .then(_ => {
+          this.snackBar.open("Producto eliminado", "", { duration: 500 })
+        })
+        .catch(error => {
+          throw error;
+        })
+    } else {
       this.resetPosition = {x : 0, y : 0}
     }
   }
