@@ -16,8 +16,13 @@
 
 mat-tab-group {
     flex: 1;
+
     ::ng-deep .mat-tab-body-wrapper {
       height: 100%;
+    }
+
+    ::ng-deep .mat-tab-body {
+        position: absolute;
     }
 }
 
@@ -30,7 +35,7 @@ mat-tab-group {
 }
 
 .searchbar {
-    position: fixed;
+    position: absolute;
     width: calc(100% - 80px);
 
     ::ng-deep .mat-form-field-flex {
@@ -66,5 +71,7 @@ mat-option {
 
 .products_box {
     width: 100%;
-    padding-top: calc(5% + 50px);
+    overflow-y: auto;
+    padding: 0;
+    margin-top: calc(5% + 50px);
 }

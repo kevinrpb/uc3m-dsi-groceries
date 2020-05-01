@@ -19,6 +19,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
+import { ClipboardModule } from 'ngx-clipboard';
+
 import { environment } from '../environments/environment';
 
 import { LoggedGuard } from './core/auth/logged.guard';
@@ -68,7 +70,8 @@ import { ShareListComponent } from './shared/components/share-list/share-list.co
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    MaterialModule
+    MaterialModule,
+    ClipboardModule
   ],
   providers: [
     LoggedGuard,
