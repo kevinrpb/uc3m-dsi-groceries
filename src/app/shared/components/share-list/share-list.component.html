@@ -1,7 +1,7 @@
 <div class="mat-title">Miembros 👯‍♂️</div>
 <mat-list>
     <mat-list-item *ngFor="let m of data.members">
-        <img [src]="m.image" class="image">
+        <img [src]="m.photoURL" class="image" (error)="showDefaultProfilePic($event, m.healthData.gender)">
         <div>
             <span mat-line><strong>{{m.displayName}}</strong></span>
             <span mat-line>{{m.email}}</span>
