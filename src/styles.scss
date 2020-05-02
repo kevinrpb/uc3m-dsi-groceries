@@ -22,6 +22,15 @@ html, body {
     background-color: $bright;
 }
 
+.keyboard .header {
+    display: none !important;
+}
+
+.keyboard .logo {
+    display: none !important;
+}
+
+
 .body {
     overflow: hidden;
     width: 100%;
