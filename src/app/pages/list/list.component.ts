@@ -35,8 +35,8 @@ export class ListComponent implements OnInit {
 
   public dotsMenuItems: Array<MenuItem> = [
     {
-      title: 'Compartir',
-      subtitle: 'Gestiona los miembros de la lista',
+      title: 'Miembros',
+      subtitle: 'Revisa quién tiene acceso a la lista',
       function: () => {
         this.dialog.open(
           ShareListComponent,

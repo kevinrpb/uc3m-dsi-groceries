@@ -24,8 +24,9 @@
 - [X] Permitir compartir lista
   - [X] La función compartir debe encontrar el ucid recibiendo un email (el usuario no puede meter el ucid a mano)
   - [X] Función para obtener los objetos user de los miembros (displayName, email, foto) --> desde los ucid en el array de participantes (Lo ideal es que fuera Observable<{}[]>)
-  - [ ] Eliminar usuarios compartiendo
-  - [ ] Si no eres owner que no deje compartir
+  - [ ] Eliminar usuarios compartiendo (solo si eres owner)
+  - [X] Si no eres owner que no deje compartir
+  - [X] El owner debe salir en la lista
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.25.
 

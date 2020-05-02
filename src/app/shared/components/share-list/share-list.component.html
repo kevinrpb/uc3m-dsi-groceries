@@ -1,20 +1,30 @@
-<div class="mat-title">Miembros 👯‍♂️</div>
-<mat-list *ngIf="list$ | async as l">
-    <mat-list-item *ngFor="let m of l.participants">
-        <img [src]="m.photoURL" class="image" (error)="showDefaultProfilePic($event, m.healthData.gender)">
-        <div>
-            <span mat-line><strong>{{m.displayName}}</strong></span>
-            <span mat-line>{{m.email}}</span>
-        </div>
-    </mat-list-item>
-</mat-list>
-
-<mat-form-field appearance="fill">
-    <mat-label>Nuevo miembro</mat-label>
-    <input matInput placeholder="ejemplo@correo.com" [formControl]="emailFormControl">
-    <button mat-icon-button matSuffix class="button_color" (click)="addMember()">
-        <mat-icon>add_circle</mat-icon>
-    </button>
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">El correo no es válido</mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">Este campo es obligatorio</mat-error>
-</mat-form-field>
+<div *ngIf="list$ | async as l"> 
+    <div class="mat-title">Miembros 👯‍♂️</div>
+    <mat-list>
+        <mat-list-item>
+            <img [src]="l.owner.photoURL" class="image" (error)="showDefaultProfilePic($event)">
+            <span class="owner">👑</span>
+            <div>
+                <span mat-line><strong>{{l.owner.displayName.split(' ').slice(0, 2).join(' ')}}</strong></span>
+                <span mat-line>{{l.owner.email}}</span>
+            </div>
+        </mat-list-item>
+        <mat-list-item *ngFor="let m of l.participants">
+            <img [src]="m.photoURL" class="image" (error)="showDefaultProfilePic($event)">
+            <div>
+                <span mat-line><strong>{{m.displayName}}</strong></span>
+                <span mat-line>{{m.email}}</span>
+            </div>
+        </mat-list-item>
+    </mat-list>
+    
+    <mat-form-field appearance="fill" *ngIf="l.owner.uid === (listService.user$ | async)?.uid">
+        <mat-label>Nuevo miembro</mat-label>
+        <input matInput placeholder="ejemplo@correo.com" [formControl]="emailFormControl">
+        <button mat-icon-button matSuffix class="button_color" (click)="addMember()">
+            <mat-icon>add_circle</mat-icon>
+        </button>
+        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">El correo no es válido</mat-error>
+        <mat-error *ngIf="emailFormControl.hasError('required')">Este campo es obligatorio</mat-error>
+    </mat-form-field>
+</div>

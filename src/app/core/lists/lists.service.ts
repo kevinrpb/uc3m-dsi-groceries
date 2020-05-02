@@ -40,7 +40,7 @@ export class ListService {
     this.user$.pipe(filter(user => user !== null)).pipe(
       switchMap(user =>
         afs.collection<List>("lists", reference =>
-          reference.where("owner", "==", user.uid)
+          reference.where("owner", "==", user)
         ).valueChanges()
       )
     ).subscribe(this._ownedLists$)
@@ -61,12 +61,12 @@ export class ListService {
   }
 
   async create(): Promise<string> {
-    const uid = this.user$.getValue().uid
+    const user = this.user$.getValue()
     const lid = this.afs.createId()
     const list: List = {
       lid: lid,
       name: 'Nueva Lista',
-      owner: uid,
+      owner: user,
       participants: [],
       products: []
     }
@@ -129,7 +129,7 @@ export class ListService {
       throw new Error("No existen usuarios con ese email");
     }
 
-    const { uid, email, displayName, photoURL } = <User>userDocs[0].data();
+    const { uid, email, displayName, photoURL } = <User>userDocs[0].data()
     const participant = { uid, email, displayName, photoURL }
 
     await this.afs.collection<List>('lists').doc(lid).update({

@@ -66,9 +66,7 @@ export class HomeComponent {
   }
 
   public showDefaultProfilePic(event: any) {
-    this.auth.user$.subscribe(user => {
-      event.target.src = `assets/images/placeholder_image_${user.healthData.gender ? user.healthData.gender : 'male'}.png`;
-    })
+    event.target.src = 'assets/images/placeholder_image.png';
   }
 
 }

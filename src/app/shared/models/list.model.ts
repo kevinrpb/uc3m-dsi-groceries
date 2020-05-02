@@ -23,7 +23,7 @@ export interface ListParticipant {
 export interface List {
   lid: string
   name: string
-  owner: string
+  owner: ListParticipant
   participants: ListParticipant[]
   products: Array<ListProduct>
 }
