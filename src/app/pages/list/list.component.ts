@@ -9,7 +9,6 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { ShareListComponent } from 'src/app/shared/components/share-list/share-list.component';
 import { FormControl } from '@angular/forms';
 import { Product, Rating } from 'src/app/shared/models/product.model';
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { ProductsService } from 'src/app/core/lists/products.service';
 
 @Component({
