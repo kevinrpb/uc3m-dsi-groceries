@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { List, ListProduct } from "../../shared/models/list.model";
+import { List, ListProduct, ListParticipant } from "../../shared/models/list.model";
 
 import * as firebase from "firebase/app"
 
@@ -10,6 +10,7 @@ import {
 import { BehaviorSubject, of, combineLatest } from "rxjs";
 import { switchMap, filter } from "rxjs/operators";
 import { AuthService } from '../auth/auth.service';
+import { User } from 'src/app/shared/models/user.model';
 
 @Injectable({
   providedIn: "root"
@@ -19,27 +20,35 @@ export class ListService {
   private _ownedLists$: BehaviorSubject<List[]> = new BehaviorSubject([])
   private _sharedLists$: BehaviorSubject<List[]> = new BehaviorSubject([])
 
-  public uid$: BehaviorSubject<string> = new BehaviorSubject(null)
+  public user$: BehaviorSubject<ListParticipant> = new BehaviorSubject(null)
   public lists$: BehaviorSubject<List[]> = new BehaviorSubject([])
 
   constructor(
     private auth: AuthService,
     private afs:  AngularFirestore,
   ) {
-    auth.user$.pipe(switchMap(user => user ? of(user.uid) : null)).subscribe(this.uid$)
+    auth.user$.pipe(
+      switchMap(user => {
+        if (user === null) return null;
 
-    this.uid$.pipe(filter(uid => uid !== null)).pipe(
-      switchMap(uid =>
+        const { uid, email, displayName, photoURL }: ListParticipant = user;
+
+        return of({ uid, email, displayName, photoURL })
+      })
+    ).subscribe(this.user$)
+
+    this.user$.pipe(filter(user => user !== null)).pipe(
+      switchMap(user =>
         afs.collection<List>("lists", reference =>
-          reference.where("owner", "==", uid)
+          reference.where("owner", "==", user.uid)
         ).valueChanges()
       )
     ).subscribe(this._ownedLists$)
 
-    this.uid$.pipe(filter(uid => uid !== null)).pipe(
-      switchMap(uid =>
+    this.user$.pipe(filter(user => user !== null)).pipe(
+      switchMap(user =>
         afs.collection<List>("lists", reference =>
-          reference.where("participants", "array-contains", uid)
+          reference.where("participants", "array-contains", user)
         ).valueChanges()
       )
     ).subscribe(this._sharedLists$)
@@ -52,7 +61,7 @@ export class ListService {
   }
 
   async create(): Promise<string> {
-    const uid = this.uid$.getValue()
+    const uid = this.user$.getValue().uid
     const lid = this.afs.createId()
     const list: List = {
       lid: lid,
@@ -105,10 +114,32 @@ export class ListService {
     })
   }
 
-  // TODO: Debe recibir un email y encontrar el ucid asociado
-  async addParticipant(lid: string, newUser: string) {
+  async addParticipant(lid: string, _email: string) {
+    if (_email === this.user$.getValue().email) {
+      throw new Error("No puedes invitarte a ti mismo 🥴")
+    }
+
+    const userCollection = await this.afs.collection<User>("users", reference =>
+      reference.where("email", "==", _email)
+    ).get().toPromise();
+
+    const userDocs = userCollection.docs;
+
+    if (userDocs.length < 1) {
+      throw new Error("No existen usuarios con ese email");
+    }
+
+    const { uid, email, displayName, photoURL } = <User>userDocs[0].data();
+    const participant = { uid, email, displayName, photoURL }
+
     await this.afs.collection<List>('lists').doc(lid).update({
-      participants: firebase.firestore.FieldValue.arrayUnion(newUser)
+      participants: firebase.firestore.FieldValue.arrayUnion(participant)
+    })
+  }
+
+  async removeParticipant(lid: string, participant: ListParticipant) {
+    await this.afs.collection<List>('lists').doc(lid).update({
+      participants: firebase.firestore.FieldValue.arrayRemove(participant)
     })
   }
 

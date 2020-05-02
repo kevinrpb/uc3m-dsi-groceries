@@ -1,6 +1,6 @@
 <div class="mat-title">Miembros 👯‍♂️</div>
-<mat-list>
-    <mat-list-item *ngFor="let m of data.members">
+<mat-list *ngIf="list$ | async as l">
+    <mat-list-item *ngFor="let m of l.participants">
         <img [src]="m.photoURL" class="image" (error)="showDefaultProfilePic($event, m.healthData.gender)">
         <div>
             <span mat-line><strong>{{m.displayName}}</strong></span>

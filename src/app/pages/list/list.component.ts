@@ -41,20 +41,7 @@ export class ListComponent implements OnInit {
         this.dialog.open(
           ShareListComponent,
           {
-            data: {
-              lid: this.list.getValue().lid,
-              members: [
-              {
-                displayName: 'Juan Pérez',
-                email: 'juanito@gmail.com',
-                image: 'assets/images/reduced_logo.svg'
-              },
-              {
-                displayName: 'Sara Socas',
-                email: 'sara456@hotmail.es',
-                image: 'assets/images/reduced_logo.svg'
-              }]
-            },
+            data: this.list,
             autoFocus: false,
             restoreFocus: false
           }
@@ -140,7 +127,7 @@ export class ListComponent implements OnInit {
     setTimeout(_ => {
       const { lid, products } = this.list.getValue();
       const product = products.find(p => p.pid === pid);
-  
+
       this.listService.removeProduct(lid, product)
         .then(_ => {
           this.snackBar.open("Producto eliminado", "", { duration: 500 })

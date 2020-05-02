@@ -13,10 +13,17 @@ export interface ListProduct {
   amount: Number
 }
 
+export interface ListParticipant {
+  uid: string
+  email: string
+  displayName?: string
+  photoURL?: string
+}
+
 export interface List {
   lid: string
   name: string
   owner: string
-  participants: string[]
+  participants: ListParticipant[]
   products: Array<ListProduct>
 }
