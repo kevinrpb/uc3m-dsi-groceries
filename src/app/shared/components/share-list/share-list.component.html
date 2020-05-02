@@ -5,15 +5,15 @@
             <img [src]="l.owner.photoURL" class="image" (error)="showDefaultProfilePic($event)">
             <span class="owner">👑</span>
             <div>
-                <span mat-line><strong>{{l.owner.displayName.split(' ').slice(0, 2).join(' ')}}</strong></span>
-                <span mat-line>{{l.owner.email}}</span>
+                <span mat-line class="line"><strong>{{l.owner.displayName.split(' ').slice(0, 2).join(' ')}}</strong></span>
+                <span mat-line class="line">{{l.owner.email}}</span>
             </div>
         </mat-list-item>
-        <mat-list-item *ngFor="let m of l.participants">
+        <mat-list-item *ngFor="let m of l.participants" [id]="m.uid" (swipeleft)="delete($event, m)" (swiperight)="delete($event, m)">
             <img [src]="m.photoURL" class="image" (error)="showDefaultProfilePic($event)">
             <div>
-                <span mat-line><strong>{{m.displayName}}</strong></span>
-                <span mat-line>{{m.email}}</span>
+                <span mat-line class="line"><strong>{{m.displayName.split(' ').slice(0, 2).join(' ')}}</strong></span>
+                <span mat-line class="line">{{m.email}}</span>
             </div>
         </mat-list-item>
     </mat-list>

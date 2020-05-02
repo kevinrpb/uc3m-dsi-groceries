@@ -129,7 +129,7 @@ export class ListService {
       throw new Error("No existen usuarios con ese email");
     }
 
-    const { uid, email, displayName, photoURL } = <User>userDocs[0].data()
+    const { uid, email, displayName, photoURL } = userDocs[0].data()
     const participant = { uid, email, displayName, photoURL }
 
     await this.afs.collection<List>('lists').doc(lid).update({

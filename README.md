@@ -2,7 +2,7 @@
 
 ## TODO
 ### Styles
-- [ ] Hacer iconos cuadrados
+- [X] Hacer iconos cuadrados
 - [X] Poner fondo de body del mismo color que la app
 
 ### Auth
@@ -24,7 +24,7 @@
 - [X] Permitir compartir lista
   - [X] La función compartir debe encontrar el ucid recibiendo un email (el usuario no puede meter el ucid a mano)
   - [X] Función para obtener los objetos user de los miembros (displayName, email, foto) --> desde los ucid en el array de participantes (Lo ideal es que fuera Observable<{}[]>)
-  - [ ] Eliminar usuarios compartiendo (solo si eres owner)
+  - [X] Eliminar usuarios compartiendo (solo si eres owner)
   - [X] Si no eres owner que no deje compartir
   - [X] El owner debe salir en la lista
 

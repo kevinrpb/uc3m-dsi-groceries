@@ -22,3 +22,11 @@ mat-form-field {
 mat-list {
     margin-bottom: 24px;
 }
+
+.line {
+    max-width: 150px;
+}
+
+mat-list-item {
+  transition: transform .25s ease-in-out;
+}

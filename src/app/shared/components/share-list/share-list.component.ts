@@ -24,10 +24,12 @@ export class ShareListComponent {
   public emailFormControl: FormControl = new FormControl('', [Validators.required, Validators.email])
 
   public addMember() {
-    const { lid } = this.list$.getValue();
+
+    const { lid } = this.list$.getValue()
 
     this.listService.addParticipant(lid, this.emailFormControl.value)
       .then(_ => {
+        this.emailFormControl.reset()
         this.snackBar.open("Usuario invitado 😃", "", { duration: 1500 })
       })
       .catch((error: Error) => {
@@ -38,6 +40,19 @@ export class ShareListComponent {
   
   public showDefaultProfilePic(event: any) {
     event.target.src = 'assets/images/placeholder_image.png'
+  }
+
+  public delete(event: any, participant: ListParticipant) {
+    const { lid, owner } = this.list$.getValue()
+
+    if (owner.uid !== this.listService.user$.getValue().uid) {
+      return
+    }
+
+    document.getElementById(participant.uid).style.transform = `translate3d(${event.velocity > 0 ? '' : '-'}110%, 0, 0)`
+    setTimeout(_ => {
+      this.listService.removeParticipant(lid, participant)
+    }, 250)
   }
 
 }
