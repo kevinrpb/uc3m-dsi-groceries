@@ -1,8 +1,8 @@
-<div class="body" *ngIf="list$ | async as l">
+<div class="body" *ngIf="list$ | async as list">
 
     <div class="header">
         <back-arrow></back-arrow>
-        <input mat-input class="name_input mat-h2" [(ngModel)]="name" (blur)="updateName()">
+        <input mat-input class="editable_input mat-h2" style="text-align: center;" [(ngModel)]="list.name" (blur)="updateList()">
         <dots-menu [items]="dotsMenuItems"></dots-menu>
     </div>
 
@@ -19,25 +19,29 @@
                         <mat-icon>add_circle</mat-icon>
                     </button>
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of filteredOptions | async; let last = last;" [value]="" (click)="addProduct(option)">
-                            <span class="rating">{{Rating[option.healthData.rating]}}</span>
-                            <strong class="name">{{option.name}}</strong>
-                            <div class="price">{{option.price}}€</div>
+                        <mat-option *ngFor="let o of filteredOptions | async; let last = last;" [value]="" (click)="addProduct(o)">
+                            <span class="rating">{{Rating[o.healthData.rating]}}</span>
+                            <strong class="name">{{o.name}}</strong>
+                            <div class="price">{{o.price}}€</div>
                             <mat-divider *ngIf="!last"></mat-divider>
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
 
+                <div *ngIf="listProducts.length === 0" class="empty">
+                    La lista está vacía 😢
+                </div>
+
                 <mat-list class="products_box">
-                    <div *ngFor="let l of listProducts" [id]="l.pid" (swipeleft)="delete($event, l.pid)" (swiperight)="delete($event, l.pid)" class="product">
+                    <div *ngFor="let p of listProducts" [id]="p.pid" (swipeleft)="deleteProduct($event, p.pid)" (swiperight)="deleteProduct($event, p.pid)" class="product">
                         <mat-list-item>
                             <span mat-line>
-                                <strong class="name" style="float: left;">{{l.name}}</strong>
-                                <span class="price" style="float: right; font-size: 14px;">{{l.price}}€</span>
+                                <strong class="name" style="float: left;">{{p.name}}</strong>
+                                <span class="price" style="float: right; font-size: 14px;">{{p.price}}€</span>
                             </span>
                             <span mat-line style="margin-top: 3px;">
-                                <span style="float: left;">{{l.amount}}</span>
-                                <span style="float: right; font-size: 17px;">{{Rating[l.rating]}}</span>
+                                <input mat-input class="editable_input" [(ngModel)]="p.amount" (blur)="updateList()">
+                                <span style="float: right; font-size: 17px;">{{Rating[p.rating]}}</span>
                             </span>
                         </mat-list-item>
                         <mat-divider></mat-divider>

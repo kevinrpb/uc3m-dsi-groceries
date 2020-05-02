@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { List, ListProduct, ListProductAmountType } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
@@ -29,9 +29,8 @@ export class ListComponent implements OnInit {
 
   public Rating = Rating
 
-  public list$: BehaviorSubject<List> = new BehaviorSubject(null);
-  public listProducts: ListProduct[] = [];
-  public name: string
+  public list$: BehaviorSubject<List> = new BehaviorSubject(null)
+  public listProducts: Array<ListProduct> = []
 
   public dotsMenuItems: Array<MenuItem> = [
     {
@@ -82,30 +81,26 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.list$.subscribe(list => {
-      if (!list) return;
-
-      this.name = list.name
+      if (!list) return
       this.listProducts = list.products
     })
 
     this.router.params.subscribe(params => {
       if (!params) return;
-      this.listService.getList(params['lid']).subscribe(this.list$);
-    });
+      this.listService.getList(params['lid']).subscribe(this.list$)
+    })
 
-    this.searchbarControl.valueChanges.subscribe(value => this.filter(value));
-
-    this.filteredOptions = this.productService.filteredProducts$.asObservable();
+    this.searchbarControl.valueChanges.subscribe(value => this.filter(value))
+    this.filteredOptions = this.productService.filteredProducts$.asObservable()
   }
 
   private filter(value: string) {
-    this.productService.setFilter(value ? value.split(' ') : []);
+    this.productService.setFilter(value ? value.split(' ') : [])
   }
 
-  public updateName() {
-    const updatedList = this.list$.getValue()
-    updatedList.name = this.name
-    this.listService.update(updatedList.lid, updatedList)
+  public updateList() {
+    const list = this.list$.getValue()
+    this.listService.update(list.lid, list)
   }
 
   public addProduct(product: Product) {
@@ -122,7 +117,7 @@ export class ListComponent implements OnInit {
       })
   }
 
-  public delete(event: any, pid: string) {
+  public deleteProduct(event: any, pid: string) {
     document.getElementById(pid).style.transform = `translate3d(${event.velocity > 0 ? '' : '-'}100%, 0, 0)`
     setTimeout(_ => {
       const { lid, products } = this.list$.getValue()

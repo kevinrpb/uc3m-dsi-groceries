@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
 
     if (/Android/.test(navigator.appVersion)) {
       window.addEventListener("resize", (event) => {
-        console.log(window.innerHeight)
         if (window.innerHeight == this.screenHeight) {
           document.body.classList.remove('keyboard')
           return

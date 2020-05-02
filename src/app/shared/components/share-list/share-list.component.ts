@@ -42,7 +42,7 @@ export class ShareListComponent {
     event.target.src = 'assets/images/placeholder_image.png'
   }
 
-  public delete(event: any, participant: ListParticipant) {
+  public removeMember(event: any, participant: ListParticipant) {
     const { lid, owner } = this.list$.getValue()
 
     if (owner.uid !== this.listService.user$.getValue().uid) {
@@ -52,6 +52,12 @@ export class ShareListComponent {
     document.getElementById(participant.uid).style.transform = `translate3d(${event.velocity > 0 ? '' : '-'}110%, 0, 0)`
     setTimeout(_ => {
       this.listService.removeParticipant(lid, participant)
+        .then(_ => {
+          this.snackBar.open(`${participant.displayName} ya no tiene acceso`, "", { duration: 1500 })
+        })
+        .catch(error => {
+          throw error
+        })
     }, 250)
   }
 

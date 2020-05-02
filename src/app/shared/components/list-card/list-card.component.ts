@@ -23,20 +23,31 @@ export class ListCardComponent {
 
   public exportList(event: Event) {
     event.stopPropagation()
-    var listTxt = `>> GROOKEPY ✌️ <<\nLista " ${this.list.name} ", con los productos: ${this.list.products}`
-    this.list.products.forEach(p => listTxt += `\n> ${p.name} , ${p.amount}${(p.amountType === ListProductAmountType.units) ? "unidades" : "gr."}`)
+    var listTxt = `>> GROOKEPY ✌️ <<\nLista " ${this.list.name} ", con los productos:`
+    this.list.products.forEach(p => listTxt += `\n> ${p.name} , ${p.amount}`)
     this.copyToClipboard(listTxt)
-    this.snackBar.open("La lista ha sido copiada al portapapeles", "", { duration : 1500})
+      .then(msg => {
+        this.snackBar.open(msg, "", { duration : 1500})
+      })
+      .catch(msg => {
+        this.snackBar.open(msg, "", { duration : 1500})
+      })
   }
 
-  private copyToClipboard(text: string) {
-    if (!navigator.clipboard) {
-      return
-    }
-    navigator.clipboard.writeText(text)
-      .catch((error: Error) => {
-        throw error
-      })
+  private copyToClipboard(text: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      if (!navigator.clipboard) {
+        reject("El portapaeles no está disponible")
+      }
+      navigator.clipboard.writeText(text)
+        .then(_ => {
+          resolve("La lista ha sido copiada al portapapeles")
+        })
+        .catch((error: Error) => {
+          reject(error.message)
+        })
+    })
+    
   }
 
 }

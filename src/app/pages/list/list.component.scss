@@ -5,8 +5,7 @@
     flex-direction: column;
 }
 
-.name_input {
-    text-align: center;
+.editable_input {
     max-width: 60%;
     background: none;
     border: none;
@@ -85,10 +84,10 @@ mat-option {
 }
 
 .products_box {
-    width: 100%;
-    overflow-y: auto;
-    padding: 0;
-    margin-top: calc(5% + 50px);
+  width: 100%;
+  overflow-y: auto;
+  padding: 0;
+  margin-top: calc(5% + 50px);
 }
 
 .product {
@@ -104,4 +103,16 @@ mat-option {
     margin-left: 8px;
     width: 35px;
   }
+}
+
+.empty {
+  margin-top: calc(5% + 50px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  max-width: 80px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 22px;
+  opacity: .7;
 }

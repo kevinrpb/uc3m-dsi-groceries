@@ -22,13 +22,22 @@ html, body {
     background-color: $bright;
 }
 
-.keyboard .header {
-    display: none !important;
-}
-
 .keyboard .logo {
     display: none !important;
 }
+
+.keyboard .signup_header {
+    display: none !important;
+}
+
+.keyboard mat-tab-header {
+    display: none !important;
+}
+
+.keyboard mat-tab-group {
+    padding-top: 31px;
+}
+
 
 
 .body {
