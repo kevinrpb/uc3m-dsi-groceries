@@ -3,9 +3,9 @@ import { Rating } from './product.model';
 export interface ListProduct {
   pid: string
   name: string
-  price: Number
+  price: number
   rating: Rating
-  amount: Number
+  amount: number
   bought: boolean
 }
 

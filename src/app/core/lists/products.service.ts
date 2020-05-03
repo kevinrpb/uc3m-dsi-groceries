@@ -40,6 +40,10 @@ export class ProductsService {
     return this.products$.getValue()
   }
 
+  getProduct(pid: string): Product {
+    return this.getProducts().find(p => p.pid === pid)
+  }
+
   setFilter(keywords: string[]) {
     this._filterKeywords.next(keywords);
   }

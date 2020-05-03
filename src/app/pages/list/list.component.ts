@@ -10,6 +10,8 @@ import { ShareListComponent } from 'src/app/shared/components/share-list/share-l
 import { FormControl } from '@angular/forms';
 import { Product, Rating } from 'src/app/shared/models/product.model';
 import { ProductsService } from 'src/app/core/lists/products.service';
+import { SingleDataSet, Label } from 'ng2-charts';
+import { ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-list',
@@ -31,6 +33,9 @@ export class ListComponent implements OnInit {
 
   public list$: BehaviorSubject<List> = new BehaviorSubject(null)
   public listProducts: Array<ListProduct> = []
+
+  public pieChartLabels: Array<Label> = ['Carbohidratos', 'Proteínas', 'Grasas']
+  public pieChartData: Array<Number> = []
 
   public dotsMenuItems: Array<MenuItem> = [
     {
@@ -83,6 +88,12 @@ export class ListComponent implements OnInit {
     this.list$.subscribe(list => {
       if (!list) return
       this.listProducts = list.products
+
+      const sum = (numbers: number[]) => numbers.reduce((prev, next) => prev + next)
+      const property = (value: string) => list.products.map(p => this.productService.getProduct(p.pid).healthData[value])
+      const get = (value: string) => sum(property(value))
+
+      this.pieChartData = [get('carbos'), get('proteins'), get('fat')]
     })
 
     this.router.params.subscribe(params => {
@@ -92,6 +103,7 @@ export class ListComponent implements OnInit {
 
     this.searchbarControl.valueChanges.subscribe(value => this.filter(value))
     this.filteredOptions = this.productService.filteredProducts$.asObservable()
+
   }
 
   private filter(value: string) {

@@ -8,19 +8,19 @@ export enum Rating {
 
 export interface ProductHealthData {
   rating: Rating
-  amountBase: Number // ex 100g
-  calories: Number
-  proteins: Number
-  carbos: Number
-  fat: Number
-  sugar: Number
-  salt: Number
+  amountBase: number // ex 100g
+  calories: number
+  proteins: number
+  carbos: number
+  fat: number
+  sugar: number
+  salt: number
 }
 
 export interface Product {
   pid: string
   name: string
-  price: Number
+  price: number
   healthData: ProductHealthData
   category: string
   tags: string[]
