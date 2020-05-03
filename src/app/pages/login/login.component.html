@@ -7,7 +7,7 @@
     <div class="login_box">
 
         <div class="welcome">
-            <div class="mat-title">Bienvenido 😊</div>
+            <div class="mat-title" *ngIf="!app.verySmallScreen">Bienvenido 😊</div>
             <div class="mat-h4" *ngIf="app.bigScreen">Accede y empieza a crear tus nuevas y mejoradas listas de la compra</div>
         </div>
 
@@ -43,7 +43,7 @@
             <mat-icon>account_circle</mat-icon>
         </button>
 
-        <button mat-button color="warn" (click)="goSignup()">
+        <button mat-button color="warn" (click)="goSignup()" style="margin-bottom: 18px;">
             Crear nueva cuenta
         </button>
 

@@ -12,7 +12,9 @@ export class AppComponent implements OnInit {
   ) { }
 
   private screenHeight: Number
+
   public bigScreen: boolean
+  public verySmallScreen: boolean
 
   ngOnInit() {
     this.screenHeight = window.innerHeight
@@ -29,6 +31,7 @@ export class AppComponent implements OnInit {
       })
     }
 
+    this.verySmallScreen = this.screenHeight < 540
     this.bigScreen = this.screenHeight > 675
   }
 
