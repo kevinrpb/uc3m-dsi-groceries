@@ -9,7 +9,7 @@
                 <span mat-line class="line">{{l.owner.email}}</span>
             </div>
         </mat-list-item>
-        <mat-list-item *ngFor="let m of l.participants" [id]="m.uid" (swipeleft)="removeParticipant($event, m)" (swiperight)="removeParticipant($event, m)">
+        <mat-list-item *ngFor="let m of l.participants" [id]="m.uid" (swipeleft)="removeMember($event, m)" (swiperight)="removeMember($event, m)">
             <img [src]="m.photoURL" class="image" (error)="showDefaultProfilePic($event)">
             <div>
                 <span mat-line class="line"><strong>{{m.displayName.split(' ').slice(0, 2).join(' ')}}</strong></span>
