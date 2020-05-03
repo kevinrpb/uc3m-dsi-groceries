@@ -1,16 +1,12 @@
 import { Rating } from './product.model';
 
-export enum ListProductAmountType {
-  units, weight
-}
-
 export interface ListProduct {
   pid: string
   name: string
   price: Number
   rating: Rating
-  amountType: ListProductAmountType
   amount: Number
+  bought: boolean
 }
 
 export interface ListParticipant {

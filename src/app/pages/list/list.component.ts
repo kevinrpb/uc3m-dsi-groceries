@@ -1,6 +1,6 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
-import { List, ListProduct, ListProductAmountType } from 'src/app/shared/models/list.model';
+import { List, ListProduct } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { ListService } from 'src/app/core/lists/lists.service';
 import { Location } from '@angular/common';
@@ -108,9 +108,9 @@ export class ListComponent implements OnInit {
     const { pid, name, price, healthData } = product;
     const { rating } = healthData;
 
-    this.listService.addProduct(lid, { pid, name, price, rating, amount: healthData.amountBase, amountType: ListProductAmountType.units })
+    this.listService.addProduct(lid, { pid, name, price, rating, amount: healthData.amountBase, bought: false })
       .then(_ => {
-        this.snackBar.open('Producto añadido', "", { duration: 1500 })
+        this.snackBar.open('Producto añadido', "", { duration: 1000 })
       })
       .catch(error => {
         throw error
@@ -125,12 +125,18 @@ export class ListComponent implements OnInit {
 
       this.listService.removeProduct(lid, product)
         .then(_ => {
-          this.snackBar.open("Producto eliminado", "", { duration: 1500 })
+          this.snackBar.open("Producto eliminado", "", { duration : 1000 })
         })
         .catch(error => {
           throw error
         })
     }, 250)
+  }
+
+  public checkDisabled() {
+    if (this.listProducts.length === 0) {
+      this.snackBar.open("Debes añadir un producto antes 😒", "", { duration : 1000})
+    }
   }
 
 }

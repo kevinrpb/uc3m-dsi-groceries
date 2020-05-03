@@ -51,18 +51,32 @@
             </div>
         </mat-tab>
 
-        <mat-tab>
+        <mat-tab [disabled]="listProducts.length === 0">
             <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">shopping_basket</mat-icon>
+                <mat-icon class="example-tab-icon" (click)="checkDisabled()">shopping_basket</mat-icon>
             </ng-template>
             <div class="tab_container">
-                Content2
+                
+                <mat-list class="shopping_box">
+                    <mat-list-item *ngFor="let p of listProducts" [id]="p.pid" class="product" [ngClass]="{'selected' : p.bought}" (click)="p.bought = !p.bought; updateList()">
+                        <button mat-raised-button>
+                            <div class="inner">
+                                <span class="name">
+                                    <span>{{p.name}}</span>
+                                    <span style="font-weight: 100;">{{p.amount}}</span>
+                                </span>
+                                <span class="price">{{p.price}}€</span>
+                            </div>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+
             </div>
         </mat-tab>
 
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">favorite</mat-icon>
+        <mat-tab [disabled]="listProducts.length === 0">
+            <ng-template mat-tab-label >
+                <mat-icon class="example-tab-icon" (click)="checkDisabled()">favorite</mat-icon>
             </ng-template>
             <div class="tab_container">
                 Content3

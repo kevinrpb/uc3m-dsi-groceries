@@ -88,20 +88,74 @@ mat-option {
   overflow-y: auto;
   padding: 0;
   margin-top: calc(5% + 50px);
+
+  .product {
+    transition: transform .25s ease-in-out;
+
+    .name {
+      width: calc(100% - 43px);
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
 }
 
-.product {
-  transition: transform .25s ease-in-out;
+.shopping_box {
+  width: 100%;
+  overflow-y: auto;
+  padding: 0;
 
-  .name {
-    width: calc(100% - 43px);
-    text-overflow: ellipsis;
-    overflow: hidden;
+  .product {
+    transition: opacity .25s ease-out;
+    transition: transform .25s ease-in-out;
+    height: 64px !important;
+    margin-bottom: 12px;
+
+    ::ng-deep .mat-list-item-content {
+      padding: 0 !important;
+    }
+
+    ::ng-deep .mat-raised-button {
+      background-color: transparent;
+    }
+
+    button {
+      border: 2px solid black;
+      width: 100%;
+      height: 100%;
+    }
+
+    .inner {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .name {
+      text-align: left;
+
+      span {
+        display: block;
+        height: 24px;
+        line-height: 24px;
+      }
+    }
+
+    .price {
+      float: right;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      height: 100%;
+      position: absolute;
+      right: 16px;
+    }
   }
 
-  .price {
-    margin-left: 8px;
-    width: 35px;
+  .selected {
+    transform: scale(0.95);
+    opacity: 0.3;
   }
 }
 

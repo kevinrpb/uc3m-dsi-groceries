@@ -14,7 +14,7 @@ import { ListParticipant } from '../../models/list.model';
 export class ShareListComponent {
 
   constructor(
-    private listService:  ListService,
+    public listService:  ListService,
     public dialogRef:     MatDialogRef<ShareListComponent>,
     private snackBar:     MatSnackBar,
     @Inject(MAT_DIALOG_DATA) 
@@ -30,11 +30,11 @@ export class ShareListComponent {
     this.listService.addParticipant(lid, this.emailFormControl.value)
       .then(_ => {
         this.emailFormControl.reset()
-        this.snackBar.open("Usuario invitado 😃", "", { duration: 1500 })
+        this.snackBar.open("Usuario invitado 😃", "", { duration: 1000 })
       })
       .catch((error: Error) => {
         const { message } = error
-        this.snackBar.open(message, "", { duration: 1500 })
+        this.snackBar.open(message, "", { duration: 1000 })
       })
   }
   
@@ -53,7 +53,7 @@ export class ShareListComponent {
     setTimeout(_ => {
       this.listService.removeParticipant(lid, participant)
         .then(_ => {
-          this.snackBar.open(`${participant.displayName} ya no tiene acceso`, "", { duration: 1500 })
+          this.snackBar.open(`${participant.displayName} ya no tiene acceso`, "", { duration: 1000 })
         })
         .catch(error => {
           throw error

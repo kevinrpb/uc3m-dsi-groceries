@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { List, ListProductAmountType } from '../../models/list.model';
+import { List } from '../../models/list.model';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
