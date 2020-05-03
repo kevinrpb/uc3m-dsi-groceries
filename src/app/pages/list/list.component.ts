@@ -10,8 +10,6 @@ import { ShareListComponent } from 'src/app/shared/components/share-list/share-l
 import { FormControl } from '@angular/forms';
 import { Product, Rating } from 'src/app/shared/models/product.model';
 import { ProductsService } from 'src/app/core/lists/products.service';
-import { SingleDataSet, Label } from 'ng2-charts';
-import { ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-list',
@@ -34,8 +32,8 @@ export class ListComponent implements OnInit {
   public list$: BehaviorSubject<List> = new BehaviorSubject(null)
   public listProducts: Array<ListProduct> = []
 
-  public pieChartLabels: Array<Label> = ['Carbohidratos', 'Proteínas', 'Grasas']
-  public pieChartData: Array<Number> = []
+  public pieChartLabels: Array<string> = ['Carbohidratos', 'Proteínas', 'Grasas']
+  public pieChartData: Array<number> = []
 
   public dotsMenuItems: Array<MenuItem> = [
     {
