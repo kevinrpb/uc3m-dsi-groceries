@@ -14,6 +14,7 @@ import { switchMap } from 'rxjs/operators';
   providedIn: "root"
 })
 export class ProductsService {
+  
   public products$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   public filteredProducts$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   private _filterKeywords: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);

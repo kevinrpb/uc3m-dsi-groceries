@@ -4,12 +4,16 @@ import { List, ListProduct } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { ListService } from 'src/app/core/lists/lists.service';
 import { Location } from '@angular/common';
-import { Observable, BehaviorSubject, of } from 'rxjs';
+import { Observable, BehaviorSubject, of, combineLatest } from 'rxjs';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ShareListComponent } from 'src/app/shared/components/share-list/share-list.component';
 import { FormControl } from '@angular/forms';
 import { Product, Rating } from 'src/app/shared/models/product.model';
 import { ProductsService } from 'src/app/core/lists/products.service';
+import { Label } from 'ng2-charts';
+import { ChartOptions } from 'chart.js';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { age, UserGender } from 'src/app/shared/models/user.model'
 
 @Component({
   selector: 'app-list',
@@ -19,6 +23,7 @@ import { ProductsService } from 'src/app/core/lists/products.service';
 export class ListComponent implements OnInit {
 
   constructor(
+    public auth:            AuthService,
     private router:         ActivatedRoute,
     private location:       Location,
     private listService:    ListService,
@@ -32,8 +37,21 @@ export class ListComponent implements OnInit {
   public list$: BehaviorSubject<List> = new BehaviorSubject(null)
   public listProducts: Array<ListProduct> = []
 
-  public pieChartLabels: Array<string> = ['Carbohidratos', 'Proteínas', 'Grasas']
+  public calories: number
+  public yourCalories: any
+
+  public pieChartLabels: Array<Label> = ['Carbohidratos', 'Proteínas', 'Grasas']
   public pieChartData: Array<number> = []
+  public pieChartOptions: ChartOptions = {
+    legend: {
+      position: "right",
+      labels: {
+        fontSize: 14,
+        fontFamily: 'Roboto',
+        fontStyle: 'bold'
+      }
+    }
+  }
 
   public dotsMenuItems: Array<MenuItem> = [
     {
@@ -79,19 +97,63 @@ export class ListComponent implements OnInit {
     }
   ]
 
+  public healthWarnings: Array<{}>
+  private healthWarnings_: Array<{}> = [
+    {
+      warning: 'Tu lista tiene muchos productos con una elevada cantidad de azúcar 🍭',
+      property: 'sugar',
+      condition: (sugar: number) => sugar > 45
+    },
+    {
+      warning: 'Deberías reducir los productos con un alto contenido en sal 🧂',
+      property: 'salt',
+      condition: (salt: number) => salt > 10
+    },
+    {
+      warning: 'Cuidado con las grasas, no son muy recomendables 🥓',
+      property: 'fat',
+      condition: (fat: number) => fat > 50
+    },
+    {
+      warning: 'Recuerda que las proteínas son importantes 🐮',
+      property: 'proteins',
+      condition: (proteins: number) => proteins < 45
+    },
+    {
+      warning: 'Aunque son importantes, no te pases con los hidratos 🥔',
+      property: 'carbos',
+      condition: (carbos: number) => carbos > 125
+    }
+  ]
+
   public filteredOptions: Observable<Product[]>
   public searchbarControl: FormControl = new FormControl()
 
   ngOnInit() {
-    this.list$.subscribe(list => {
-      if (!list) return
+    this.auth.user$.subscribe(user => {
+      this.yourCalories = 
+        (user.healthData) ?
+        (10 * user.healthData.weight + 625 * user.healthData.height - 5 * age(user.healthData.birthdate) + (user.healthData.gender == UserGender.female ? -161 : 5)) :
+        'No tenemos datos'
+    })
+
+    combineLatest(this.list$, this.productService.products$).subscribe(([list, products]) => {
+      if (!list || !products) return
       this.listProducts = list.products
 
-      const sum = (numbers: number[]) => numbers.reduce((prev, next) => prev + next)
-      const property = (value: string) => list.products.map(p => this.productService.getProduct(p.pid).healthData[value])
+      const sum = (numbers: number[]) => numbers.reduce((prev, next) => prev + next, 0)
+      const property = (value: string) => list.products.map(p => {
+        const product = products.find(p_ => p_.pid === p.pid)
+        return (product) ? product.healthData[value] : 0
+      })
       const get = (value: string) => sum(property(value))
 
       this.pieChartData = [get('carbos'), get('proteins'), get('fat')]
+      this.calories = get('calories')
+
+      this.healthWarnings = this.healthWarnings_.filter((w: any) =>
+        w.condition(get(w.property))
+      )
     })
 
     this.router.params.subscribe(params => {

@@ -27,6 +27,7 @@ import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/materi
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { ChartsModule } from 'ng2-charts';
 
 import { environment } from '../environments/environment';
 
@@ -78,7 +79,8 @@ import { ShareListComponent } from './shared/components/share-list/share-list.co
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    MaterialModule
+    MaterialModule,
+    ChartsModule
   ],
   providers: [
     LoggedGuard,

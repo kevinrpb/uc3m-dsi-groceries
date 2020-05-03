@@ -81,8 +81,48 @@
             <div class="tab_container">
                 
                 <div class="graph">
-                    
+                    <canvas baseChart 
+                        [data]="pieChartData" 
+                        [labels]="pieChartLabels" 
+                        [chartType]="'doughnut'"
+                        [legend]="true"
+                        [options]="pieChartOptions">
+                    </canvas>
                 </div>
+
+                <mat-divider class="divider"></mat-divider>
+
+                <div class="calories">
+                    <div class="chip_box">
+                        <span class="chip_label">Total</span>
+                        <div class="chip total"><strong>{{calories}}</strong><br>kcal</div>
+                    </div>
+                    <span class="vs">🔥</span>
+                    
+                    <div class="chip_box">
+                        <span class="chip_label">Tú 🏃‍♂️</span>
+                        <div class="chip recommended">
+                            <strong>{{yourCalories}}</strong><br><span *ngIf="(auth.user$ | async)?.healthData">kcal/día</span>
+                        </div>
+                    </div>
+                </div>
+
+                <mat-divider class="divider"></mat-divider>
+
+                <mat-list >
+                    <div *ngFor="let w of healthWarnings">
+                        <mat-list-item class="warning">
+                            <div class="icon">⚠️</div>
+                            <div class="text">{{w.warning}}</div>
+                        </mat-list-item>
+                    </div>
+                    <div *ngIf="healthWarnings.length === 0">
+                        <mat-list-item class="warning">
+                            <div class="icon">👌</div>
+                            <div class="text">Tu lista está perfecta, bien hecho</div>
+                        </mat-list-item>
+                    </div>
+                </mat-list>
 
             </div>
         </mat-tab>

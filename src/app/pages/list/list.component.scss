@@ -170,3 +170,74 @@ mat-option {
   line-height: 22px;
   opacity: .7;
 }
+
+.divider {
+  width: 100%;
+  margin: 16px 0;
+}
+
+.calories {
+  display: flex;
+  justify-content: center;
+  align-items: center;    
+  width: calc(100% - 32px);
+  padding: 20px 20px 10px;
+  background-color: #F5F4E9;
+  border-radius: 5px;
+
+  .chip_box {
+    text-align: center;
+  }
+
+  .chip_label {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .chip {
+    border-radius: 5px;
+    padding: 10px 5px;
+    margin: 12px 0;
+    color: white;
+    flex: 2;
+    width: 90px;
+  }
+
+  .total {
+    background: $color-primary-2;
+  }
+
+  .vs {
+    font-size: 30px;
+    text-align: center;
+    flex: 3;
+    margin-top: 20px;
+  }
+
+  .recommended {
+    background: $color-complement-2;
+  }
+
+}
+
+.warning {
+
+  margin-bottom: 18px;
+
+  .icon {  
+    padding: 7px 7px 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $color-primary-1;
+    border-radius: 50%;
+  }
+
+  .text {
+    float: right;
+    font-size: 15px;
+    line-height: 18px;
+    margin-left: 20px;
+  }
+
+}
