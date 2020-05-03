@@ -225,13 +225,13 @@ mat-option {
   margin-bottom: 18px;
 
   .icon {  
-    padding: 7px 7px 9px;
+    min-width: 35px;
+    min-height: 35px;
     display: flex;
     justify-content: center;
     align-items: center;    
-    background: white;
+    background-color: #F5F4E9;
     border-radius: 50%;
-    border: 1px solid black;
   }
 
   .text {
