@@ -38,6 +38,8 @@ export class ListComponent implements OnInit {
   public list$: BehaviorSubject<List> = new BehaviorSubject(null)
   public listProducts: Array<ListProduct> = []
 
+  public price: string
+
   public calories: number
   public yourCalories: any
 
@@ -151,6 +153,7 @@ export class ListComponent implements OnInit {
 
       this.pieChartData = [get('carbos'), get('proteins'), get('fat')]
       this.calories = get('calories')
+      this.price = sum(list.products.map(p => p.price)).toFixed(2)
 
       this.healthWarnings = this.healthWarnings_.filter((w: any) =>
         w.condition(get(w.property))

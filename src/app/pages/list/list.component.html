@@ -11,7 +11,7 @@
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">speaker_notes</mat-icon>
             </ng-template>
-            <div class="tab_container">
+            <div class="tab_container" style="height: calc(95% - 50px);">
 
                 <mat-form-field class="searchbar" appearance="fill">
                     <input type="text" placeholder="Añade un producto" matInput [formControl]="searchbarControl" [matAutocomplete]="auto">
@@ -49,6 +49,11 @@
                 </mat-list>
 
             </div>
+            
+            <mat-toolbar class="total_price">
+                <span>Precio total estimado</span>
+                <span class="price_text">{{price}}€</span>
+            </mat-toolbar>
         </mat-tab>
 
         <mat-tab [disabled]="listProducts.length === 0">
