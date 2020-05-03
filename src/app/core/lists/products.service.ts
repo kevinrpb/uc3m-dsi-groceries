@@ -50,12 +50,13 @@ export class ProductsService {
     this._filterSearch.next(filter);
   }
 
-  checkFilter(product: Product, searchString: string): boolean {
+  checkFilter(product: Product, search: string): boolean {
     const { name, category, tags } = product;
 
+    const searchString = search.toLocaleLowerCase();
     const searchWords = searchString.split(' ');
 
-    const compareWords = [category, ...tags, ...name.split(' ')];
+    const compareWords = [category, ...tags, ...name.split(' ')].map(word => word.toLocaleLowerCase());
     const compareString = compareWords.join(' ');
 
     let score = compareTwoStrings(searchString, compareString) * 3;
