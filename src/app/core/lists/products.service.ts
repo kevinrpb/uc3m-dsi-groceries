@@ -66,12 +66,6 @@ export class ProductsService {
       if (compareWords.includes(word)) score += 0.2;
     }
 
-    console.group(product.name);
-    console.log(searchString);
-    console.log(compareString);
-    console.log(score);
-    console.groupEnd();
-
     return score >= 0.2;
   }
 }

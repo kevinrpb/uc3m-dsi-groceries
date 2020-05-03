@@ -163,7 +163,7 @@ export class ListComponent implements OnInit {
     })
 
     this.searchbarControl.valueChanges
-      .pipe(filter((value: string) => value.length > 1))
+      .pipe(filter((value: string) => (value) ? value.length > 1 : false))
       .subscribe((value: string) => this.filter(value))
 
     this.filteredOptions = this.productService.filteredProducts$.asObservable()
