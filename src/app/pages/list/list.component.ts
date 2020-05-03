@@ -1,10 +1,11 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
 import { List, ListProduct } from 'src/app/shared/models/list.model';
 import { MenuItem } from 'src/app/shared/models/menu-item.model';
 import { ListService } from 'src/app/core/lists/lists.service';
 import { Location } from '@angular/common';
 import { Observable, BehaviorSubject, of } from 'rxjs';
+import { filter } from "rxjs/operators";
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ShareListComponent } from 'src/app/shared/components/share-list/share-list.component';
 import { FormControl } from '@angular/forms';
@@ -99,13 +100,16 @@ export class ListComponent implements OnInit {
       this.listService.getList(params['lid']).subscribe(this.list$)
     })
 
-    this.searchbarControl.valueChanges.subscribe(value => this.filter(value))
+    this.searchbarControl.valueChanges
+      .pipe(filter((value: string) => value.length > 1))
+      .subscribe((value: string) => this.filter(value))
+
     this.filteredOptions = this.productService.filteredProducts$.asObservable()
 
   }
 
   private filter(value: string) {
-    this.productService.setFilter(value ? value.split(' ') : [])
+    this.productService.setFilter(value ? value : "")
   }
 
   public updateList() {

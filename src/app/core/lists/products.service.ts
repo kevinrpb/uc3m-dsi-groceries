@@ -6,7 +6,9 @@ import {
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
 
-import { BehaviorSubject, of, merge, combineLatest } from "rxjs";
+import { compareTwoStrings } from "string-similarity";
+
+import { BehaviorSubject, of, combineLatest } from "rxjs";
 import { Product } from 'src/app/shared/models/product.model';
 import { switchMap } from 'rxjs/operators';
 
@@ -16,18 +18,18 @@ import { switchMap } from 'rxjs/operators';
 export class ProductsService {
   public products$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   public filteredProducts$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
-  private _filterKeywords: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  private _filterSearch: BehaviorSubject<string> = new BehaviorSubject<string>("");
 
   constructor(
     private afs: AngularFirestore,
   ) {
     afs.collection<Product>('products').valueChanges().subscribe(this.products$);
 
-    combineLatest(this.products$, this._filterKeywords).pipe(
-      switchMap(([products, keywords]) => {
-        if (keywords.length < 1) return of([]);
+    combineLatest(this.products$, this._filterSearch).pipe(
+      switchMap(([products, search]) => {
+        if (search.length < 2) return of([]);
 
-        let _products = products.filter(product => this.checkFilter(product, keywords));
+        let _products = products.filter(product => this.checkFilter(product, search));
 
         if (_products.length > 15) _products = _products.slice(0, 14);
 
@@ -44,22 +46,30 @@ export class ProductsService {
     return this.getProducts().find(p => p.pid === pid)
   }
 
-  setFilter(keywords: string[]) {
-    this._filterKeywords.next(keywords);
+  setFilter(filter: string) {
+    this._filterSearch.next(filter);
   }
 
-  checkFilter(product: Product, keywords: string[]): boolean {
+  checkFilter(product: Product, searchString: string): boolean {
     const { name, category, tags } = product;
-    const nameWords = name.split(' ');
 
-    for (let keyword of keywords) {
-      if (
-        nameWords.includes(keyword) ||
-        category === keyword ||
-        tags.includes(keyword)
-      ) return true;
+    const searchWords = searchString.split(' ');
+
+    const compareWords = [category, ...tags, ...name.split(' ')];
+    const compareString = compareWords.join(' ');
+
+    let score = compareTwoStrings(searchString, compareString) * 3;
+
+    for (let word of searchWords) {
+      if (compareWords.includes(word)) score += 0.2;
     }
 
-    return false;
+    console.group(product.name);
+    console.log(searchString);
+    console.log(compareString);
+    console.log(score);
+    console.groupEnd();
+
+    return score >= 0.2;
   }
 }
