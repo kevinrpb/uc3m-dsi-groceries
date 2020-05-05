@@ -134,7 +134,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.auth.user$.subscribe(user => {
-      this.yourCalories = 
+      this.yourCalories =
         (user.healthData) ?
         (10 * user.healthData.weight + 625 * user.healthData.height - 5 * age(user.healthData.birthdate) + (user.healthData.gender == UserGender.female ? -161 : 5)) :
         'No tenemos datos'
@@ -180,6 +180,29 @@ export class ListComponent implements OnInit {
   public updateList() {
     const list = this.list$.getValue()
     this.listService.update(list.lid, list)
+  }
+
+  public addCustomProduct() {
+    const { lid } = this.list$.getValue()
+    const name: string = this.searchbarControl.value
+
+    const product: ListProduct = {
+      pid: "-1",
+      name,
+      price: 0,
+      rating: Rating.nice,
+      amount: 1,
+      bought: false
+    }
+
+    this.listService.addProduct(lid, product)
+      .then(_ => {
+        this.snackBar.open('Producto añadido', "", { duration: 1000 })
+        this.searchbarControl.setValue("")
+      })
+      .catch(error => {
+        throw error
+      })
   }
 
   public addProduct(product: Product) {

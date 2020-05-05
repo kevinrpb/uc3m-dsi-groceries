@@ -16,7 +16,7 @@ import { switchMap } from 'rxjs/operators';
   providedIn: "root"
 })
 export class ProductsService {
-  
+
   public products$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   public filteredProducts$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>([]);
   private _filterSearch: BehaviorSubject<string> = new BehaviorSubject<string>("");
@@ -57,7 +57,7 @@ export class ProductsService {
     const searchString = search.toLocaleLowerCase();
     const searchWords = searchString.split(' ');
 
-    const compareWords = [category, ...tags, ...name.split(' ')].map(word => word.toLocaleLowerCase());
+    const compareWords = [category, ...tags, ...name.split(' ')].map(word => word ? word.toLocaleLowerCase() : '');
     const compareString = compareWords.join(' ');
 
     let score = compareTwoStrings(searchString, compareString) * 3;

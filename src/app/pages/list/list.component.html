@@ -16,7 +16,7 @@
                 <mat-form-field class="searchbar" appearance="fill">
                     <input type="text" placeholder="Añade un producto" matInput [formControl]="searchbarControl" [matAutocomplete]="auto">
                     <button mat-icon-button matSuffix disabled style="color: #000000;">
-                        <mat-icon>add_circle</mat-icon>
+                        <mat-icon (click)="addCustomProduct()">add_circle</mat-icon>
                     </button>
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let o of filteredOptions | async; let last = last;" [value]="" (click)="addProduct(o)">
@@ -49,7 +49,7 @@
                 </mat-list>
 
             </div>
-            
+
             <mat-toolbar class="total_price">
                 <span>Precio total estimado</span>
                 <span class="price_text">{{price}}€</span>
@@ -61,7 +61,7 @@
                 <mat-icon class="example-tab-icon" (click)="checkDisabled()">shopping_basket</mat-icon>
             </ng-template>
             <div class="tab_container">
-                
+
                 <mat-list class="shopping_box">
                     <mat-list-item *ngFor="let p of listProducts" [id]="p.pid" class="product" [ngClass]="{'selected' : p.bought}" (click)="p.bought = !p.bought; updateList()">
                         <button mat-raised-button>
@@ -84,11 +84,11 @@
                 <mat-icon class="example-tab-icon" (click)="checkDisabled()">favorite</mat-icon>
             </ng-template>
             <div class="tab_container">
-                
+
                 <div class="graph">
-                    <canvas baseChart 
-                        [data]="pieChartData" 
-                        [labels]="pieChartLabels" 
+                    <canvas baseChart
+                        [data]="pieChartData"
+                        [labels]="pieChartLabels"
                         [chartType]="'doughnut'"
                         [legend]="true"
                         [options]="pieChartOptions">
@@ -103,7 +103,7 @@
                         <div class="chip total"><strong>{{calories}}</strong><br>kcal</div>
                     </div>
                     <span class="vs">🔥</span>
-                    
+
                     <div class="chip_box">
                         <span class="chip_label">Tú 🏃‍♂️</span>
                         <div class="chip recommended">
